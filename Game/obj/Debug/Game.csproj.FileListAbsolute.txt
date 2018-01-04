@@ -1,0 +1,88 @@
+C:\Users\Admin\Source\Repos\Game\Game\bin\Debug\Game.exe.config
+C:\Users\Admin\Source\Repos\Game\Game\bin\Debug\Game.exe
+C:\Users\Admin\Source\Repos\Game\Game\bin\Debug\Game.pdb
+C:\Users\Admin\Source\Repos\Game\Game\bin\Debug\Tao.DevIl.dll
+C:\Users\Admin\Source\Repos\Game\Game\bin\Debug\Tao.FreeGlut.dll
+C:\Users\Admin\Source\Repos\Game\Game\bin\Debug\Tao.OpenGl.dll
+C:\Users\Admin\Source\Repos\Game\Game\bin\Debug\Tao.Platform.Windows.dll
+C:\Users\Admin\Source\Repos\Game\Game\bin\Debug\Tao.DevIl.xml
+C:\Users\Admin\Source\Repos\Game\Game\bin\Debug\Tao.FreeGlut.xml
+C:\Users\Admin\Source\Repos\Game\Game\bin\Debug\Tao.OpenGl.xml
+C:\Users\Admin\Source\Repos\Game\Game\bin\Debug\Tao.Platform.Windows.xml
+C:\Users\Admin\Source\Repos\Game\Game\obj\Debug\Game.Form1.resources
+C:\Users\Admin\Source\Repos\Game\Game\obj\Debug\Game.Properties.Resources.resources
+C:\Users\Admin\Source\Repos\Game\Game\obj\Debug\Game.csproj.GenerateResource.Cache
+C:\Users\Admin\Source\Repos\Game\Game\obj\Debug\Game.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Source\Repos\Game\Game\obj\Debug\Game.exe
+C:\Users\Admin\Source\Repos\Game\Game\obj\Debug\Game.pdb
+C:\Users\Admin\Source\Repos\Game\Game\obj\Debug\Game.csprojResolveAssemblyReference.cache
+F:\учебка 7 сем\гаме\туц\Game_n\Game\Game\bin\Debug\Game.exe.config
+F:\учебка 7 сем\гаме\туц\Game_n\Game\Game\obj\Debug\Game.exe
+F:\учебка 7 сем\гаме\туц\Game_n\Game\Game\obj\Debug\Game.pdb
+F:\учебка 7 сем\гаме\туц\Game_n\Game\Game\obj\Debug\Game.csprojResolveAssemblyReference.cache
+F:\учебка 7 сем\гаме\туц\Game_n\Game\Game\obj\Debug\Game.Form1.resources
+F:\учебка 7 сем\гаме\туц\Game_n\Game\Game\obj\Debug\Game.Properties.Resources.resources
+F:\учебка 7 сем\гаме\туц\Game_n\Game\Game\obj\Debug\Game.csproj.GenerateResource.Cache
+F:\учебка 7 сем\гаме\туц\Game_n\Game\Game\bin\Debug\Game.exe
+F:\учебка 7 сем\гаме\туц\Game_n\Game\Game\bin\Debug\Game.pdb
+F:\учебка 7 сем\гаме\туц\Game_n\Game\Game\bin\Debug\Tao.DevIl.dll
+F:\учебка 7 сем\гаме\туц\Game_n\Game\Game\bin\Debug\Tao.FreeGlut.dll
+F:\учебка 7 сем\гаме\туц\Game_n\Game\Game\bin\Debug\Tao.OpenGl.dll
+F:\учебка 7 сем\гаме\туц\Game_n\Game\Game\bin\Debug\Tao.Platform.Windows.dll
+F:\учебка 7 сем\гаме\туц\Game_n\Game\Game\bin\Debug\Tao.DevIl.xml
+F:\учебка 7 сем\гаме\туц\Game_n\Game\Game\bin\Debug\Tao.FreeGlut.xml
+F:\учебка 7 сем\гаме\туц\Game_n\Game\Game\bin\Debug\Tao.OpenGl.xml
+F:\учебка 7 сем\гаме\туц\Game_n\Game\Game\bin\Debug\Tao.Platform.Windows.xml
+D:\Desktop\Game_n\Game\Game\bin\Debug\Game.exe.config
+D:\Desktop\Game_n\Game\Game\bin\Debug\Game.exe
+D:\Desktop\Game_n\Game\Game\bin\Debug\Game.pdb
+D:\Desktop\Game_n\Game\Game\bin\Debug\Tao.DevIl.dll
+D:\Desktop\Game_n\Game\Game\bin\Debug\Tao.FreeGlut.dll
+D:\Desktop\Game_n\Game\Game\bin\Debug\Tao.OpenGl.dll
+D:\Desktop\Game_n\Game\Game\bin\Debug\Tao.Platform.Windows.dll
+D:\Desktop\Game_n\Game\Game\bin\Debug\Tao.DevIl.xml
+D:\Desktop\Game_n\Game\Game\bin\Debug\Tao.FreeGlut.xml
+D:\Desktop\Game_n\Game\Game\bin\Debug\Tao.OpenGl.xml
+D:\Desktop\Game_n\Game\Game\bin\Debug\Tao.Platform.Windows.xml
+D:\Desktop\Game_n\Game\Game\obj\Debug\Game.csprojResolveAssemblyReference.cache
+D:\Desktop\Game_n\Game\Game\obj\Debug\Game.Form1.resources
+D:\Desktop\Game_n\Game\Game\obj\Debug\Game.Properties.Resources.resources
+D:\Desktop\Game_n\Game\Game\obj\Debug\Game.csproj.GenerateResource.Cache
+D:\Desktop\Game_n\Game\Game\obj\Debug\Game.csproj.CoreCompileInputs.cache
+D:\Desktop\Game_n\Game\Game\obj\Debug\Game.exe
+D:\Desktop\Game_n\Game\Game\obj\Debug\Game.pdb
+F:\учебка 7 сем\гаме\туц\Game_n2\Game_n\Game_n\Game\Game\bin\Debug\Game.exe.config
+F:\учебка 7 сем\гаме\туц\Game_n2\Game_n\Game_n\Game\Game\obj\Debug\Game.exe
+F:\учебка 7 сем\гаме\туц\Game_n2\Game_n\Game_n\Game\Game\obj\Debug\Game.pdb
+F:\учебка 7 сем\гаме\туц\Game_n2\Game_n\Game_n\Game\Game\bin\Debug\Game.exe
+F:\учебка 7 сем\гаме\туц\Game_n2\Game_n\Game_n\Game\Game\bin\Debug\Game.pdb
+F:\учебка 7 сем\гаме\туц\Game_n2\Game_n\Game_n\Game\Game\bin\Debug\Tao.DevIl.dll
+F:\учебка 7 сем\гаме\туц\Game_n2\Game_n\Game_n\Game\Game\bin\Debug\Tao.FreeGlut.dll
+F:\учебка 7 сем\гаме\туц\Game_n2\Game_n\Game_n\Game\Game\bin\Debug\Tao.OpenGl.dll
+F:\учебка 7 сем\гаме\туц\Game_n2\Game_n\Game_n\Game\Game\bin\Debug\Tao.Platform.Windows.dll
+F:\учебка 7 сем\гаме\туц\Game_n2\Game_n\Game_n\Game\Game\bin\Debug\Tao.DevIl.xml
+F:\учебка 7 сем\гаме\туц\Game_n2\Game_n\Game_n\Game\Game\bin\Debug\Tao.FreeGlut.xml
+F:\учебка 7 сем\гаме\туц\Game_n2\Game_n\Game_n\Game\Game\bin\Debug\Tao.OpenGl.xml
+F:\учебка 7 сем\гаме\туц\Game_n2\Game_n\Game_n\Game\Game\bin\Debug\Tao.Platform.Windows.xml
+F:\учебка 7 сем\гаме\туц\Game_n2\Game_n\Game_n\Game\Game\obj\Debug\Game.csprojResolveAssemblyReference.cache
+F:\учебка 7 сем\гаме\туц\Game_n2\Game_n\Game_n\Game\Game\obj\Debug\Game.Form1.resources
+F:\учебка 7 сем\гаме\туц\Game_n2\Game_n\Game_n\Game\Game\obj\Debug\Game.Properties.Resources.resources
+F:\учебка 7 сем\гаме\туц\Game_n2\Game_n\Game_n\Game\Game\obj\Debug\Game.csproj.GenerateResource.Cache
+D:\Desktop\Game\Game\bin\Debug\Game.exe.config
+D:\Desktop\Game\Game\bin\Debug\Game.exe
+D:\Desktop\Game\Game\bin\Debug\Game.pdb
+D:\Desktop\Game\Game\bin\Debug\Tao.DevIl.dll
+D:\Desktop\Game\Game\bin\Debug\Tao.FreeGlut.dll
+D:\Desktop\Game\Game\bin\Debug\Tao.OpenGl.dll
+D:\Desktop\Game\Game\bin\Debug\Tao.Platform.Windows.dll
+D:\Desktop\Game\Game\bin\Debug\Tao.DevIl.xml
+D:\Desktop\Game\Game\bin\Debug\Tao.FreeGlut.xml
+D:\Desktop\Game\Game\bin\Debug\Tao.OpenGl.xml
+D:\Desktop\Game\Game\bin\Debug\Tao.Platform.Windows.xml
+D:\Desktop\Game\Game\obj\Debug\Game.csprojResolveAssemblyReference.cache
+D:\Desktop\Game\Game\obj\Debug\Game.Form1.resources
+D:\Desktop\Game\Game\obj\Debug\Game.Properties.Resources.resources
+D:\Desktop\Game\Game\obj\Debug\Game.csproj.GenerateResource.Cache
+D:\Desktop\Game\Game\obj\Debug\Game.csproj.CoreCompileInputs.cache
+D:\Desktop\Game\Game\obj\Debug\Game.exe
+D:\Desktop\Game\Game\obj\Debug\Game.pdb
