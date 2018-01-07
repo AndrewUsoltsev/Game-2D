@@ -19,8 +19,6 @@ namespace Game.Enums
         //Lamp,
         Building2,
         Building3,
-        // на этой клетке находится человек
-        WithMan, 
         // свободная клетка
         Free,
         //финишная клетка

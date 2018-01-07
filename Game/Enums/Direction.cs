@@ -11,6 +11,8 @@ namespace Game.Enums
         UP,
         DOWN,
         LEFT,
-        RIGHT
+        RIGHT,
+        UpperRightCorner,
+        OTHER
     }
 }

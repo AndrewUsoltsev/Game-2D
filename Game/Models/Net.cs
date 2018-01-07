@@ -64,7 +64,6 @@ namespace Game.Models
             {
                 return CellsOfNet[i,j];
             }
-            // вообще, set здесь сомнителен, но пока можно оставить
             set
             {
                 CellsOfNet[i,j] = value;
@@ -205,7 +204,7 @@ namespace Game.Models
                 // диагонали
                 if (CellsOfNet[begin.X - 1, begin.Y + 1] != (int)TypeOfCell.Free || CellsOfNet[begin.X + 1, begin.Y + 1] != (int)TypeOfCell.Free)
                     return false;
-                if (CellsOfNet[begin.X - 1, begin.Y + length] != (int)TypeOfCell.Free || CellsOfNet[begin.X + 1, begin.Y - length] != (int)TypeOfCell.Free)
+                if (CellsOfNet[begin.X - 1, begin.Y + length] != (int)TypeOfCell.Free || CellsOfNet[begin.X + 1, begin.Y + length] != (int)TypeOfCell.Free)
                     return false;
 
                 CellsOfNet[begin.X, begin.Y] = (int)TypeOfCell.Block2; 

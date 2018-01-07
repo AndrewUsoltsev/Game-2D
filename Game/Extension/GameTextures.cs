@@ -13,6 +13,7 @@ using Game.Enums;
 
 namespace Game.Extension
 {
+    // TODO указать авторство димы
     public static class GameTextures
     {
         private static int imageId = 0;

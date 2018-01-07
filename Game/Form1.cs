@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
 using Tao.FreeGlut;
@@ -20,12 +21,14 @@ namespace Game
 {
     public partial class Form1 : Form
     {
+        DateTime dayTime;
+        DateTime gameTime;
         int scale = 15; // начальный масштаб отображаемой сетки
         int CountLamp = 10;
         Graphics g;
         Net net;
 
-
+        // TODO разбить на мелкие методы
         void ArrowDirection(PictureBox box, Point Man, Point Finish,int N)
         {
             
@@ -87,10 +90,13 @@ namespace Game
             net = new Net();
             
             Time.Text = "07:00";
+            dayTime = DateTime.Parse("07:00");
+
             // если день = 9, то время вышло
-            // на все 1 день 15 часов
-            DateTime date = new DateTime(2,1,11,23,0,0);
-            GameTime.Text = date.ToString("yyyy-MM-dd HH':'mm':'ss");
+            // на все 1 день 23 часа
+            gameTime = new DateTime(2,1,11,23,0,0);
+            GameTime.Text = gameTime.ToString("yyyy-MM-dd HH':'mm':'ss");
+
             GameRendering.RenderNet(net, beginRenderNet, Scene, scale, false);
             lastClickNet.X = 1;
             lastClickNet.Y = 1;
@@ -107,16 +113,16 @@ namespace Game
       
 
 
-        void TotalTimeCountingForWay(List<Point> way, Label time, Label gameTime)
+        void TotalTimeCountingForWay(int travelTime, Label time, Label GameTime)
         {
-            // время суток
-            DateTime dayTime = DateTime.Parse(time.Text);
-            int totalMinutes = 0;
-            totalMinutes = WorkWithTime.SubTotalTimeCountingForWay(way, dayTime, beginRenderNet, net,dayTimeTick);
-            time.Text = dayTime.AddMinutes(way.Count * dayTimeTick).ToShortTimeString();
-            WorkWithTime.AddTime(gameTime, -totalMinutes);
+            dayTime = dayTime.AddMinutes(travelTime);
+            time.Text = dayTime.ToShortTimeString();
+
+            gameTime = gameTime.AddMinutes(-travelTime);
+            GameTime.Text = gameTime.ToString("yyyy-MM-dd HH':'mm':'ss");
         }
 
+        bool flagRenderWay = false;
         // перемещение персонажа в нужную клетку
         private void Scene_MouseClick(object sender, MouseEventArgs e)
         {
@@ -156,15 +162,17 @@ namespace Game
                 if (((currentClickNet.X < net.N) && (currentClickNet.X > 0)) && ((currentClickNet.Y < net.N) && (currentClickNet.Y > 0)) && (!net.IsBlock(currentClickNet)))
                 {
 
-                    beginRenderNet = net.BeginPointForCentering(currentClickNet, beginRenderNet,scale);
-
                     Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
-                    TotalTimeCountingForWay(way, Time, GameTime);
+
+                    TotalTimeCountingForWay(distance, Time, GameTime);
                     
-                    GameRendering.RenderNet(net, beginRenderNet, Scene, scale, WorkWithTime.IsNight(Time));
+                    beginRenderNet = net.BeginPointForCentering(currentClickNet, beginRenderNet,scale);
+                    GameRendering.RenderNet(net, beginRenderNet, Scene, scale, WorkWithTime.IsNight(dayTime.Hour));
                     GameRendering.RenderMouseClickAlgorithmPoint(currentClickNet.X - beginRenderNet.X, currentClickNet.Y - beginRenderNet.Y);
 
                     Scene.Invalidate();
+
+                    flagRenderWay = false;
 
                     // старый клик на алгоритмической сетке
                     lastClickNet.X = currentClickNet.X - beginRenderNet.X;
@@ -189,14 +197,16 @@ namespace Game
 
 
         List<Point> way= new List<Point>();
-        Point currentClickGraph; 
+        Point currentClickGraph;
+        Point lastMoveNet;
+        int distance = 0;
         // для отображения пути, по которому будет передвигаться персонаж
         private void Scene_MouseMove(object sender, MouseEventArgs e)
         {
             int mouseArgX = e.X;
             int mouseArgY = Scene.Height - e.Y; // инвертирование значения ординаты курсора
             Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
-            GameRendering.RenderNet(net, beginRenderNet, Scene, scale, WorkWithTime.IsNight(Time));
+            GameRendering.RenderNet(net, beginRenderNet, Scene, scale, WorkWithTime.IsNight(dayTime.Hour));
 
             // текущий
             currentClickGraph = new Point(mouseArgX, mouseArgY);
@@ -204,20 +214,28 @@ namespace Game
             // предыдущий
             GameRendering.RenderMouseClickAlgorithmPoint(lastClickNet.X, lastClickNet.Y);
 
-            way = GameControl.FindPath(net.CellsOfNet, lastClickNet, currentClickNet, beginRenderNet, scale);
-            GameRendering.RenderWayByAlgorithmPoint(way);
+            if ((lastMoveNet != currentClickNet) || !flagRenderWay)
+            {
+                way = GameControl.OptimizedFindPath(way, net.CellsOfNet, lastClickNet, currentClickNet, beginRenderNet, scale); //FindPath(net.CellsOfNet, lastClickNet, currentClickNet, beginRenderNet, scale);
+                flagRenderWay = true;
+            }
 
+            GameRendering.RenderWayByAlgorithmPoint(way);
             Scene.Invalidate();
 
 
-            // ? — проверка на Null
-            if (way?.Count > 1)
+            if ((way?.Count > 1) )
             {
-                int distance = WorkWithTime.SubTotalTimeCountingForWay(way, DateTime.Parse(Time.Text), beginRenderNet, net, dayTimeTick);
+                distance = WorkWithTime.SubTotalTimeCountingForWay(way, DateTime.Parse(Time.Text), beginRenderNet, net, dayTimeTick);
                 TravelTime.Text = distance.ToString();
             }
             else
+            {
                 TravelTime.Text = "0";
+                distance = 0;
+            }
+
+            lastMoveNet = currentClickNet;
         }
 
         
@@ -231,9 +249,6 @@ namespace Game
             tick++;
             if (tick == tickInterval)
             {
-                
-
-                DateTime dayTime = DateTime.Parse(Time.Text);
                 int hourBefore = dayTime.Hour;
                 dayTime = dayTime.AddMinutes(dayTimeTick);
 
@@ -242,7 +257,6 @@ namespace Game
                 else
                     goingTime = dayTimeTick;
 
-                DateTime gameTime = DateTime.Parse(GameTime.Text);
                 gameTime = gameTime.AddMinutes(-goingTime);
                 // условие проигрыша
                if (gameTime.Day == 9)

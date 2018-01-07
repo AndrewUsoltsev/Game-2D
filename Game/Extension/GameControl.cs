@@ -15,7 +15,7 @@ namespace Game.Extension
         public const int square = 4;
         public const int octagon = 8;
         private static int amountOfSidesCell = 4;
-
+            
 
         // построение побочной сетки (той, которая будет отображаться)
         // нужно для того, чтобы алгоритм быстрее работал и не включал лишние вычисления
@@ -43,7 +43,7 @@ namespace Game.Extension
                 return null;
             int[,] subNet = CreateSubNet(cellsOfNet, BeginNet, scale);
             
-            if ((subNet[start.X, start.Y] != (int)TypeOfCell.Free) && (subNet[start.X, start.Y] != (int)TypeOfCell.WithMan) && (subNet[start.X, start.Y] != (int)TypeOfCell.Lamp)) 
+            if ((subNet[start.X, start.Y] != (int)TypeOfCell.Free)  && (subNet[start.X, start.Y] != (int)TypeOfCell.Lamp)) 
                 return null;
             // Шаг 1.
             var closedSet = new List<PathNode>();
@@ -91,59 +91,108 @@ namespace Game.Extension
             // Шаг 10.
             return null;
         }
-        // Основной метод вычисления маршрута 
-        public static List<Point> FindPath(int[,] cellsOfNet, Point start, Point goal, int amountOfSidesCell = 4)
+
+        private static Direction DeterminationOfPositionOfPoint(Point begin, Point end)
         {
-            if ((cellsOfNet[start.X, start.Y] != (int)TypeOfCell.Free) && (cellsOfNet[start.X, start.Y] != (int)TypeOfCell.WithMan) && (cellsOfNet[start.X, start.Y] != (int)TypeOfCell.Finish))
-                return null;
-            GameControl.amountOfSidesCell = amountOfSidesCell;
-            // Шаг 1.
-            var closedSet = new List<PathNode>(); 
-            var openSet = new List<PathNode>();
-            // Шаг 2.
-            var startNode = new PathNode()
-            {
-                Position = start,
-                CameFrom = null,
-                PathLengthFromStart = 0,
-                HeuristicEstimatePathLength = GetHeuristicPathLength(start, goal)
-            };
-            openSet.Add(startNode);
-            while (openSet.Count > 0)
-            {
-                // Шаг 3.
-                var currentNode = openSet.OrderBy(node =>
-                  node.EstimateFullPathLength).First();
-                // Шаг 4.
-                if (currentNode.Position == goal)
-                    return GetPathForNode(currentNode);
-                // Шаг 5.
-                openSet.Remove(currentNode);
-                closedSet.Add(currentNode);
-                // Шаг 6.
-                foreach (var neighbourNode in GetNeighbours(currentNode, goal, cellsOfNet))
-                {
-                    // Шаг 7.
-                    if (closedSet.Count(node => node.Position == neighbourNode.Position) > 0)
-                        continue;
-                    var openNode = openSet.FirstOrDefault(node =>
-                      node.Position == neighbourNode.Position);
-                    // Шаг 8.
-                    if (openNode == null)
-                        openSet.Add(neighbourNode);
-                    else
-                      if (openNode.PathLengthFromStart > neighbourNode.PathLengthFromStart)
-                      {
-                        // Шаг 9.
-                        openNode.CameFrom = currentNode;
-                        openNode.PathLengthFromStart = neighbourNode.PathLengthFromStart;
-                      }
-                }
-            }
-            // Шаг 10.
-            return null;
+            // интересуют 3 направления
+            if (end.Y > begin.Y && begin.X == end.X)
+                return Direction.UP;
+            if (end.X > begin.X)
+                if (end.Y > begin.Y)
+                    return Direction.UpperRightCorner;
+                else
+                    return Direction.RIGHT;
+            return Direction.OTHER;
+
         }
 
+       private static void AddPointToOptimizedPath(int[,] cellsOfNet, ref List<Point> previousWay, Direction direction, Point refPoint)
+       {
+           switch (direction)
+           {
+               case Direction.RIGHT:
+                   previousWay.Add(new Point(refPoint.X + 1, refPoint.Y));
+                   break;
+               case Direction.UP:
+                   previousWay.Add(new Point(refPoint.X, refPoint.Y+1));
+                   break;
+               case Direction.UpperRightCorner:
+                    // считаем, что препятствия не соприкасаются по диагонали
+                    if (cellsOfNet[refPoint.X + 1, refPoint.Y] == (int)TypeOfCell.Free)
+                        previousWay.Add(new Point(refPoint.X + 1, refPoint.Y));
+                    else if (cellsOfNet[refPoint.X, refPoint.Y + 1] == (int)TypeOfCell.Free)
+                        previousWay.Add(new Point(refPoint.X, refPoint.Y + 1));
+                    previousWay.Add(new Point(refPoint.X + 1, refPoint.Y + 1));
+                    break;
+                default: break;
+            }
+       }
+
+        // Основной метод вычисления маршрута 
+        public static List<Point> OptimizedFindPath(List<Point> previousWay, int[,] cellsOfNet, Point start, Point goal, Point BeginNet, int scale)
+        {
+            // в случае неверных данных
+            if ((start.X > scale) || (start.Y > scale) || (start.X + BeginNet.X >= cellsOfNet.GetLength(0)) || (start.Y + BeginNet.Y >= cellsOfNet.GetLength(1)))
+                return null;
+
+            if (cellsOfNet[goal.X, goal.Y] == (int)TypeOfCell.Block1 || cellsOfNet[goal.X, goal.Y] == (int)TypeOfCell.Block2)
+                return null;
+            // условие для выхода с препятствий
+            if (previousWay?.Count > 1)
+            {
+                // рассматриваем предыдущую точку
+                int index = previousWay.Count - 1;
+                Point refPoint = previousWay[index - 1];
+                if (previousWay[index].X > start.X && previousWay[index].Y > start.Y)
+                {
+                    Direction direction = DeterminationOfPositionOfPoint(refPoint, goal);
+                    AddPointToOptimizedPath(cellsOfNet, ref previousWay, direction, refPoint);
+                }
+            }
+            return FindPath(cellsOfNet, start, goal, BeginNet, scale);
+        }
+
+        /*
+         * public static List<Point> OptimizedFindPath(List<Point> previousWay, int[,] cellsOfNet, Point start, Point goal, Point BeginNet, int scale)
+        {
+            // в случае неверных данных
+            if ((start.X > scale) || (start.Y > scale) || (start.X + BeginNet.X >= cellsOfNet.GetLength(0)) || (start.Y + BeginNet.Y >= cellsOfNet.GetLength(1)))
+                return null;
+
+            // условие выхода с препятствий
+            if (previousWay?.Count > 1)
+            {
+                List<Point> result = new List<Point>(previousWay);
+                
+
+                // рассматриваем предыдущую точку
+                int index = previousWay.Count - 2;
+                Point refPoint = previousWay[index];
+                // TODO сделать норм условие
+                if (GetHeuristicPathLength(start, goal) > GetHeuristicPathLength(start, refPoint))
+                {
+                    previousWay.RemoveRange(index, 2);
+                    try
+                    {
+                        previousWay.AddRange(FindPath(cellsOfNet, refPoint, goal, BeginNet, scale));
+                        return previousWay;
+                    }
+                    catch (Exception ex)
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    return FindPath(cellsOfNet, start, goal, BeginNet, scale);
+                }
+            }
+            else
+            {
+                return FindPath(cellsOfNet, start, goal, BeginNet, scale);
+            }
+        }
+        */
         private static int GetDistanceBetweenNeighbours()
         {
             return 1;
@@ -154,7 +203,7 @@ namespace Game.Extension
         {
             var dX = Math.Abs(from.X - to.X);
             var dY = Math.Abs(from.Y - to.Y);
-            return Math.Sqrt(dX * dX + dY * dY);
+            return  Math.Sqrt(dX * dX + dY * dY);
         }
 
 

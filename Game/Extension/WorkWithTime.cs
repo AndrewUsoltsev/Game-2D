@@ -11,13 +11,7 @@ namespace Game.Extension
 {
     public static class WorkWithTime
     {
-        public static bool IsNight(Label Time)
-        {
-            int hour = DateTime.Parse(Time.Text).Hour;
-            if (hour >= 6 && hour < 20)
-                return false;
-            return true;
-        }
+
         public static bool IsNight(int hour)
         {
             if (hour >= 6 && hour < 20)
@@ -44,18 +38,7 @@ namespace Game.Extension
             }
         }
 
-        public static void AddTime(string timeOfWay, Label Time)
-        {
-            DateTime newTime = DateTime.Parse(Time.Text);
-            newTime = newTime.AddMinutes(Convert.ToInt32(timeOfWay));
-            Time.Text = newTime.ToShortTimeString();
-        }
-        public static void AddTime(Label Time, int timeOfWay)
-        {
-            DateTime newTime = DateTime.Parse(Time.Text);
-            newTime = newTime.AddMinutes(timeOfWay);
-            Time.Text = newTime.ToString("yyyy-MM-dd HH':'mm':'ss");
-        }
+
 
         // коэффициент времени передвижения
         private static int travelTimeFactor = 20;
