@@ -19,9 +19,9 @@ namespace Game.Extension
 
         // построение побочной сетки (той, которая будет отображаться)
         // нужно для того, чтобы алгоритм быстрее работал и не включал лишние вычисления
-        private static int[,] CreateSubNet(int[,] cellsOfNet, Point BeginNet, int scale)
+        private static TypeOfCell[,] CreateSubNet(TypeOfCell[,] cellsOfNet, Point BeginNet, int scale)
         {
-            int[,] subNet = new int[scale, scale];
+            TypeOfCell[,] subNet = new TypeOfCell[scale, scale];
             Point begin = new Point(BeginNet.X,BeginNet.Y);
             if (cellsOfNet.GetLength(0) - (BeginNet.X + scale) < 0)
                 begin.X = cellsOfNet.GetLength(0) - scale;
@@ -36,14 +36,14 @@ namespace Game.Extension
 
 
         // Основной метод вычисления маршрута 
-        public static List<Point> FindPath(int[,] cellsOfNet, Point start, Point goal, Point BeginNet, int scale)
+        public static List<Point> FindPath(TypeOfCell[,] cellsOfNet, Point start, Point goal, Point BeginNet, int scale)
         {
             // в случае неверных данных
             if ((start.X > scale) || (start.Y > scale) || (start.X+BeginNet.X >= cellsOfNet.GetLength(0) ) || (start.Y + BeginNet.Y >= cellsOfNet.GetLength(1)))
                 return null;
-            int[,] subNet = CreateSubNet(cellsOfNet, BeginNet, scale);
+            TypeOfCell[,] subNet = CreateSubNet(cellsOfNet, BeginNet, scale);
             
-            if ((subNet[start.X, start.Y] != (int)TypeOfCell.Free)  && (subNet[start.X, start.Y] != (int)TypeOfCell.Lamp)) 
+            if ((subNet[start.X, start.Y] != TypeOfCell.Free)  && (subNet[start.X, start.Y] != TypeOfCell.Lamp)) 
                 return null;
             // Шаг 1.
             var closedSet = new List<PathNode>();
@@ -106,7 +106,7 @@ namespace Game.Extension
 
         }
 
-       private static void AddPointToOptimizedPath(int[,] cellsOfNet, ref List<Point> previousWay, Direction direction, Point refPoint)
+       private static void AddPointToOptimizedPath(TypeOfCell[,] cellsOfNet, ref List<Point> previousWay, Direction direction, Point refPoint)
        {
            switch (direction)
            {
@@ -118,81 +118,45 @@ namespace Game.Extension
                    break;
                case Direction.UpperRightCorner:
                     // считаем, что препятствия не соприкасаются по диагонали
-                    if (cellsOfNet[refPoint.X + 1, refPoint.Y] == (int)TypeOfCell.Free)
+                    if (cellsOfNet[refPoint.X + 1, refPoint.Y] == TypeOfCell.Free)
                         previousWay.Add(new Point(refPoint.X + 1, refPoint.Y));
-                    else if (cellsOfNet[refPoint.X, refPoint.Y + 1] == (int)TypeOfCell.Free)
+                    else if (cellsOfNet[refPoint.X, refPoint.Y + 1] == TypeOfCell.Free)
                         previousWay.Add(new Point(refPoint.X, refPoint.Y + 1));
                     previousWay.Add(new Point(refPoint.X + 1, refPoint.Y + 1));
                     break;
-                default: break;
             }
        }
 
         // Основной метод вычисления маршрута 
-        public static List<Point> OptimizedFindPath(List<Point> previousWay, int[,] cellsOfNet, Point start, Point goal, Point BeginNet, int scale)
+        public static List<Point> OptimizedFindPath(List<Point> previousWay, TypeOfCell[,] cellsOfNet, Point start, Point goal, Point BeginNet, int scale)
         {
             // в случае неверных данных
             if ((start.X > scale) || (start.Y > scale) || (start.X + BeginNet.X >= cellsOfNet.GetLength(0)) || (start.Y + BeginNet.Y >= cellsOfNet.GetLength(1)))
                 return null;
 
-            if (cellsOfNet[goal.X, goal.Y] == (int)TypeOfCell.Block1 || cellsOfNet[goal.X, goal.Y] == (int)TypeOfCell.Block2)
+            if (cellsOfNet[goal.X + BeginNet.X, goal.Y + BeginNet.Y] == TypeOfCell.Block1 || cellsOfNet[goal.X + BeginNet.X, goal.Y + BeginNet.Y] == TypeOfCell.Block2) 
                 return null;
+
             // условие для выхода с препятствий
             if (previousWay?.Count > 1)
             {
                 // рассматриваем предыдущую точку
                 int index = previousWay.Count - 1;
-                Point refPoint = previousWay[index - 1];
+                Point refPoint = previousWay[index];
                 if (previousWay[index].X > start.X && previousWay[index].Y > start.Y)
                 {
                     Direction direction = DeterminationOfPositionOfPoint(refPoint, goal);
-                    AddPointToOptimizedPath(cellsOfNet, ref previousWay, direction, refPoint);
+                    if (direction != Direction.OTHER)
+                    {
+                        AddPointToOptimizedPath(cellsOfNet, ref previousWay, direction, refPoint);
+                        return previousWay;
+                    }
                 }
             }
             return FindPath(cellsOfNet, start, goal, BeginNet, scale);
         }
 
-        /*
-         * public static List<Point> OptimizedFindPath(List<Point> previousWay, int[,] cellsOfNet, Point start, Point goal, Point BeginNet, int scale)
-        {
-            // в случае неверных данных
-            if ((start.X > scale) || (start.Y > scale) || (start.X + BeginNet.X >= cellsOfNet.GetLength(0)) || (start.Y + BeginNet.Y >= cellsOfNet.GetLength(1)))
-                return null;
-
-            // условие выхода с препятствий
-            if (previousWay?.Count > 1)
-            {
-                List<Point> result = new List<Point>(previousWay);
-                
-
-                // рассматриваем предыдущую точку
-                int index = previousWay.Count - 2;
-                Point refPoint = previousWay[index];
-                // TODO сделать норм условие
-                if (GetHeuristicPathLength(start, goal) > GetHeuristicPathLength(start, refPoint))
-                {
-                    previousWay.RemoveRange(index, 2);
-                    try
-                    {
-                        previousWay.AddRange(FindPath(cellsOfNet, refPoint, goal, BeginNet, scale));
-                        return previousWay;
-                    }
-                    catch (Exception ex)
-                    {
-                        return null;
-                    }
-                }
-                else
-                {
-                    return FindPath(cellsOfNet, start, goal, BeginNet, scale);
-                }
-            }
-            else
-            {
-                return FindPath(cellsOfNet, start, goal, BeginNet, scale);
-            }
-        }
-        */
+       
         private static int GetDistanceBetweenNeighbours()
         {
             return 1;
@@ -219,7 +183,7 @@ namespace Game.Extension
      
 
         // Получение списка соседей для точки:
-        private static List<PathNode> GetNeighbours(PathNode pathNode, Point goal, int[,] cellsOfNet)
+        private static List<PathNode> GetNeighbours(PathNode pathNode, Point goal, TypeOfCell[,] cellsOfNet)
         {
             var result = new List<PathNode>();
 
@@ -239,10 +203,10 @@ namespace Game.Extension
                  if ((point.Y < 0) || (point.Y >= cellsOfNet.GetLength(1)))
                      continue;
                 // Проверяем, что по клетке можно ходить.
-                if ((cellsOfNet[point.X,point.Y] != (int)TypeOfCell.Free) && (cellsOfNet[point.X, point.Y] != (int)TypeOfCell.Lamp) && (cellsOfNet[point.X, point.Y] != (int)TypeOfCell.Finish))
+                if ((cellsOfNet[point.X,point.Y] != TypeOfCell.Free) && (cellsOfNet[point.X, point.Y] != TypeOfCell.Lamp) && (cellsOfNet[point.X, point.Y] != TypeOfCell.Finish))
                     continue;
                 // если точка не конечнаяя и она -- здание, то по ней нельзя ходить
-                if ((point != goal) && (cellsOfNet[point.X, point.Y] == (int)TypeOfCell.Lamp) && (cellsOfNet[point.X, point.Y] == (int)TypeOfCell.Finish))
+                if ((point != goal) && (cellsOfNet[point.X, point.Y] == TypeOfCell.Lamp) && (cellsOfNet[point.X, point.Y] == TypeOfCell.Finish))
                     continue;
                 // Заполняем данные для точки маршрута.
                 var neighbourNode = new PathNode()

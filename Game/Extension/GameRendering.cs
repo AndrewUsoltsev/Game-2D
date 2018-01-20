@@ -14,6 +14,7 @@ using Game.Enums;
 
 namespace Game.Extension
 {
+    // TODO 3d координаты??? 
     // Первый аргумент по X, второй аргумент по Y
     public static class GameRendering
     {
@@ -25,6 +26,8 @@ namespace Game.Extension
         public static uint mGlTextureObject1 = 0; // персонаж прозрачный
         public static uint mGlTextureObject2 = 0; // персонаж текущий
         public static uint mGlTextureObject3 = 0; // факел
+        public static uint mGlTextureObject4 = 0; // трава днем
+        public static uint mGlTextureObject5 = 0; // трава ночью
         public static bool textureIsLoad = false;
 
 
@@ -33,16 +36,19 @@ namespace Game.Extension
 
 
         // дополнительный метод для отрисовки сетки
-        private static void RenderTypeOfCell(Net net, Point testPoint, Point beginGraph, bool isNigth)
+        private static bool RenderTypeOfCell(Net net, Point testPoint, Point beginGraph, bool isNigth)
         {
-            if (net[testPoint.X, testPoint.Y] == (int)TypeOfCell.Free)
+            if (net[testPoint.X, testPoint.Y] == TypeOfCell.Free)
                 RenderSquareGraphPoint(beginGraph, isNigth);
-            if (net[testPoint.X, testPoint.Y] == (int)TypeOfCell.Block1)
+            else if (net[testPoint.X, testPoint.Y] == TypeOfCell.Block1)
                 RenderFillSquareGraphPoint(beginGraph,0);
-            if (net[testPoint.X, testPoint.Y] == (int)TypeOfCell.Block2)
+            else if (net[testPoint.X, testPoint.Y] == TypeOfCell.Block2)
                 RenderFillSquareGraphPoint(beginGraph,0);
-            if (net[testPoint.X, testPoint.Y] == (int)TypeOfCell.Finish)
+            else if (net[testPoint.X, testPoint.Y] == TypeOfCell.Finish)
                 RenderFinishSquareGraphPoint(beginGraph);
+            else if (net[testPoint.X, testPoint.Y] == TypeOfCell.Lamp)
+                return true;
+            return false;
         }
 
         // отрисовка сетки и ячеек в сетке
@@ -52,7 +58,9 @@ namespace Game.Extension
             int N = net.N;
             scaleX = Scene.Width / scale;
             scaleY = Scene.Height / scale;
+            List<Point> Lamps = new List<Point>();
 
+            RenderField(Scene, isNigth);
             for (int i = 0; i < scale; i++)
             {
                 Point beginGraph = new Point(0, i * scaleY);
@@ -62,32 +70,18 @@ namespace Game.Extension
                     // первый аргумент по Х, второй по Y
                     if (((first.X + j < N) && (first.Y + i < N)) && ((first.X + j >= 0) && (first.Y + i >= 0)))
                     {
-                        RenderTypeOfCell(net, new Point(first.X + j, first.Y + i), beginGraph, isNigth);
+                        if (RenderTypeOfCell(net, new Point(first.X + j, first.Y + i), beginGraph, isNigth))
+                            Lamps.Add(beginGraph);
                         beginGraph.X += scaleX;
                     }
                     else
                         break;
                 }
             }
-
 
             // отдельно факелы
-            for (int i = 0; i < scale; i++)
-            {
-                Point beginGraph = new Point(0, i * scaleY);
-                for (int j = 0; j < scale; j++)
-                {
-                    // первый аргумент по Х, второй по Y
-                    if (((first.X + j < N) && (first.Y + i < N)) && ((first.X + j >= 0) && (first.Y + i >= 0)))
-                    {
-                        if (net[first.X + j, first.Y + i] == (int)TypeOfCell.Lamp)
-                            RenderLampAndLightGraphPoint(beginGraph);
-                        beginGraph.X += scaleX;
-                    }
-                    else
-                        break;
-                }
-            }
+            foreach (Point lampCoord in Lamps)
+                RenderLampAndLightGraphPoint(lampCoord, Textures.Toarch);
 
         }
        
@@ -103,22 +97,78 @@ namespace Game.Extension
             return new Point(Nx, Ny);
         }
 
+        public static void RenderField(SimpleOpenGlControl Scene, bool isNigth)
+        {
+            int height = Scene.Height;
+            int width = Scene.Width;
 
+            // если текстура загружена
+            if (textureIsLoad)
+            {
+                // очищение текущей матрицы 
+                Gl.glLoadIdentity();
+
+                // включаем режим текстурирования
+                Gl.glEnable(Gl.GL_TEXTURE_2D);
+
+                if (!isNigth)
+                    Gl.glBindTexture(Gl.GL_TEXTURE_2D, mGlTextureObject4);
+                else
+                    Gl.glBindTexture(Gl.GL_TEXTURE_2D, mGlTextureObject5);
+
+                // включаем режим текстурирования , указывая индификатор mGlTextureObject
+
+                // сохраняем состояние матрицы
+                Gl.glPushMatrix();
+
+
+                // отрисовываем полигон
+                Gl.glBegin(Gl.GL_QUADS);
+
+                Gl.glTexCoord2f(0, 0);
+                Gl.glVertex3d(0, 0, 0);
+                Gl.glTexCoord2f(1, 0);
+                Gl.glVertex3d(width, 0, 0);
+                Gl.glTexCoord2f(1, 1);
+                Gl.glVertex3d(width, height, 0);
+                Gl.glTexCoord2f(0, 1);
+                Gl.glVertex3d(0, height, 0);
+
+                // завершаем отрисовку
+                Gl.glEnd();
+
+                // возвращаем матрицу
+                Gl.glPopMatrix();
+                // отключаем режим текстурирования
+                Gl.glDisable(Gl.GL_TEXTURE_2D);
+
+                // обновлеям элемент со сценой
+                Scene.Invalidate();
+
+            }
+        }
         // отрисовка клетки, куда было произведено нажатие мыши, 
         // возвращается точка на алгоритмической сетки
-        public static Point RenderMouseClickGraphPoint(int x,int y)
+        public static Point RenderMouseClickGraphPoint(int x,int y, Textures type)
         {
-            Point tmp = GraphPointToAlgorithmPoint(x, y);
-            Gl.glColor3ub(0, 0, 0);
-            RenderFillSquareGraphPoint(new Point(scaleX * tmp.X, scaleY * tmp.Y), 1); 
-            return tmp;
+            if (x >= 0 && y >= 0)
+            {
+              Point tmp = GraphPointToAlgorithmPoint(x, y);
+              Gl.glColor3ub(0, 0, 0);
+              RenderFillSquareGraphPoint(new Point(scaleX * tmp.X, scaleY * tmp.Y), type);
+              return tmp;
+            }
+            return new Point();
         }
 
         // отрисовка клетки, куда было произведено нажатие мыши, на алгоритмической сетке 
-        public static void RenderMouseClickAlgorithmPoint(int x, int y)
+        public static void RenderMouseClickAlgorithmPoint(int x, int y, Textures type)
         {
-            Gl.glColor3ub(0, 0, 0);
-            RenderFillSquareGraphPoint(new Point(scaleX * x, scaleY * y), 2);
+           if (x >= 0 && y >= 0)
+           {
+             Gl.glColor3ub(0, 0, 0);
+             RenderFillSquareGraphPoint(new Point(scaleX * x, scaleY * y), type);
+           }
         }
 
         #region отрисовка ячеек
@@ -151,36 +201,16 @@ namespace Game.Extension
         }
         public static void RenderSquareGraphPoint(Point begin, bool isNight) //свободная клетка
         {
-            byte cellColorG = 180;
-            if (isNight)
-                cellColorG = 100;
-
-            Gl.glBegin(Gl.GL_TRIANGLE_FAN);
-            Gl.glColor3ub(0, cellColorG, 0);
-            Gl.glVertex2d(begin.X, begin.Y);
-            Gl.glVertex2d(begin.X, begin.Y + scaleY);
-            Gl.glVertex2d(begin.X + scaleX, begin.Y + scaleY);
-            Gl.glVertex2d(begin.X + scaleX, begin.Y);
-            Gl.glEnd();
-
 
             Gl.glBegin(Gl.GL_LINE_STRIP);
             Gl.glColor3ub(0, 255, 0);
+            Gl.glVertex2d(begin.X, begin.Y + scaleY);
             Gl.glVertex2d(begin.X, begin.Y);
             Gl.glVertex2d(begin.X + scaleX, begin.Y);
             Gl.glEnd();
-
-            Gl.glBegin(Gl.GL_LINE_STRIP);
-            Gl.glColor3ub(0, 255, 0);
-            Gl.glVertex2d(begin.X, begin.Y);
-            Gl.glVertex2d(begin.X, begin.Y + scaleY);
-            Gl.glEnd();
-
-
-            
 
         }
-        private static void RenderFillSquareGraphPoint(Point begin, int var) //препятствие
+        private static void RenderFillSquareGraphPoint(Point begin, Textures type) //препятствие
         {
             // если текстура загружена
             if (textureIsLoad)
@@ -188,29 +218,24 @@ namespace Game.Extension
                 // очищение текущей матрицы 
                 Gl.glLoadIdentity();
 
-
-                Gl.glBegin(Gl.GL_TRIANGLE_FAN);
-                Gl.glVertex2d(begin.X, begin.Y);
-                Gl.glVertex2d(begin.X, begin.Y + scaleY);
-                Gl.glVertex2d(begin.X + scaleX, begin.Y + scaleY);
-                Gl.glVertex2d(begin.X + scaleX, begin.Y);
-                Gl.glEnd();
-
-
                 // включаем режим текстурирования
                 Gl.glEnable(Gl.GL_TEXTURE_2D);
                 // включаем режим текстурирования , указывая индификатор mGlTextureObject
-                if (var==0)
-                Gl.glBindTexture(Gl.GL_TEXTURE_2D, mGlTextureObject0);
-                else
-                    if (var==1)
-                    Gl.glBindTexture(Gl.GL_TEXTURE_2D, mGlTextureObject1);
-                else
-                    if (var==2)
-                    Gl.glBindTexture(Gl.GL_TEXTURE_2D, mGlTextureObject2);
-                else
-                    if (var == 3)
-                    Gl.glBindTexture(Gl.GL_TEXTURE_2D, mGlTextureObject3);
+                switch( type)
+                {
+                    case Textures.Block:
+                        Gl.glBindTexture(Gl.GL_TEXTURE_2D, mGlTextureObject0);
+                        break;
+                    case Textures.TransparentCharacter:
+                        Gl.glBindTexture(Gl.GL_TEXTURE_2D, mGlTextureObject1);
+                        break;
+                    case Textures.CurrentCharactert:
+                        Gl.glBindTexture(Gl.GL_TEXTURE_2D, mGlTextureObject2);
+                        break;
+                    case Textures.Toarch:
+                        Gl.glBindTexture(Gl.GL_TEXTURE_2D, mGlTextureObject3);
+                        break;
+                }
 
                 // сохраняем состояние матрицы
                 Gl.glPushMatrix();
@@ -219,17 +244,14 @@ namespace Game.Extension
                 // отрисовываем полигон
                 Gl.glBegin(Gl.GL_QUADS);
 
-
-
-                Gl.glVertex3d(begin.X + scaleX, begin.Y + scaleY, 0);
                 Gl.glTexCoord2f(0, 0);
-                Gl.glVertex3d(begin.X + scaleX, begin.Y, 0);
-                Gl.glTexCoord2f(1, 0);
                 Gl.glVertex3d(begin.X, begin.Y, 0);
+                Gl.glTexCoord2f(1, 0);
+                Gl.glVertex3d(begin.X + scaleX, begin.Y, 0);
                 Gl.glTexCoord2f(1, 1);
-                Gl.glVertex3d(begin.X, begin.Y + scaleY, 0);
+                Gl.glVertex3d(begin.X + scaleX, begin.Y + scaleY, 0);
                 Gl.glTexCoord2f(0, 1);
-
+                Gl.glVertex3d(begin.X, begin.Y + scaleY, 0);
 
                 // завершаем отрисовку
                 Gl.glEnd();
@@ -261,10 +283,10 @@ namespace Game.Extension
         
 
         // отрисовка фонаря
-        public static void RenderLampAndLightGraphPoint(Point beginGraph)
+        public static void RenderLampAndLightGraphPoint(Point beginGraph, Textures type)
         {
             Gl.glColor3ub(0, 255, 0);
-            RenderFillSquareGraphPoint(beginGraph,3);
+            RenderFillSquareGraphPoint(beginGraph,type);
             Gl.glColor4ub(255, 255, 0, 122);
             Point tmp = new Point(beginGraph.X + (int)(scaleX * 0.5), beginGraph.Y + (int)(scaleY * 0.5));
             DrawCircle(tmp, scaleX * 2.5f, scaleY * 2.5f);
@@ -294,8 +316,9 @@ namespace Game.Extension
         {
             if (way != null)
             {
+                Gl.glColor3ub(255, 0, 122);
                 Gl.glEnable(Gl.GL_LINE_STIPPLE);
-                Gl.glLineWidth(2);
+                Gl.glLineWidth(3);
                 Gl.glLineStipple(1, 0x00F0); // штрихи
                 for (int i = 0; i < way.Count - 1; i++)
                     RenderLineBetweenCell(way[i], way[i + 1]);

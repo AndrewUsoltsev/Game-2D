@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\Direction.cs" />
+    <Compile Include="Enums\Textures.cs" />
     <Compile Include="Extension\GameRendering.cs" />
     <Compile Include="Extension\GameTextures.cs" />
     <Compile Include="Extension\WorkWithTime.cs" />
