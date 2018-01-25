@@ -142,7 +142,7 @@
             this.Controls.Add(this.Scene);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Game";
             ((System.ComponentModel.ISupportInitialize)(this.ArrowBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
