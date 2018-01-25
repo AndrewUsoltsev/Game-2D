@@ -20,6 +20,7 @@ using Game.Enums;
 
 namespace Game
 {
+    // проект написан совместно с Dmitriy Starostin
     /// <summary>
     /// Класс формы, на которой происходит отображение всех объектов
     /// </summary>

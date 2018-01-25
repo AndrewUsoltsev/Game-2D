@@ -13,7 +13,7 @@ using Game.Enums;
 
 namespace Game.Extension
 {
-    // TODO указать авторство димы
+    // Работа с текстурами была произведена Dmitriy Starostin
     /// <summary>
     /// Класс расширения
     /// Работа с текстурами (загрузка)
