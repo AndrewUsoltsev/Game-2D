@@ -9,14 +9,29 @@ using Game.Extension;
 
 namespace Game.Models
 {
+    /// <summary>
+    /// Класс сетки, на котоой отображаются объекты
+    /// </summary>
     public class Net
     {
-
+        /// <summary>
+        /// Сетка
+        /// </summary>
         public TypeOfCell[,] CellsOfNet { get; private set; }
-        // можно будет редактировать
+        
+        /// <summary>
+        /// Размерность сетки
+        /// </summary>
         public int N { get; } = 60;
+
+        /// <summary>
+        /// Финишная клетка
+        /// </summary>
         public Point finish { get; private set; }
-        // в конструкторе написать количество сторон у ячейки
+        
+        /// <summary>
+        /// Конструктор сетки, генерирование препятствий
+        /// </summary>
         public Net()
         {
             CellsOfNet = new TypeOfCell[N,N];
@@ -52,12 +67,12 @@ namespace Game.Models
         }
 
 
-        // перегрузка индексатора, нужна, так как наш массив приватный
-        // обращение происходит как
-        // Net A = new Net()
-        // int cell = A[i,j], присваивание значения cell
-        //
-        // A[i,j] = changeCell, присваивание значения в массив cellsOfNet
+        /// <summary>
+        /// Перегрузка индексатора
+        /// </summary>
+        /// <param name="i">Абсцисса клетки</param>
+        /// <param name="j">Ордината клетки</param>
+        /// <returns></returns>
         public TypeOfCell this[int i, int j]
         {
             get
@@ -74,7 +89,7 @@ namespace Game.Models
 
         // coord = true — x
         // coord = false — y
-        public int OneCoordBeginPointForCentering(int currentClickNet, int beginRenderNet, int scale)
+        private int OneCoordBeginPointForCentering(int currentClickNet, int beginRenderNet, int scale)
         {
             int resultCoord = 0;
             int scaleAround = (int)(scale * 0.5);
@@ -93,6 +108,14 @@ namespace Game.Models
             else resultCoord = beginRenderNet;
             return resultCoord;
         }
+
+        /// <summary>
+        /// Перемещение начала отобраемой части сетки
+        /// </summary>
+        /// <param name="currentClickNet">Текущая точка</param>
+        /// <param name="beginRenderNet">Предыдущая точка начала отображаемой сетки</param>
+        /// <param name="scale">Масштаб отображаемой части сетки</param>
+        /// <returns>Возвращает точку начала отобраемой части сетки</returns>
         public Point BeginPointForCentering(Point currentClickNet, Point beginRenderNet,int scale)
         {
             Point resultNet = new Point();
@@ -100,6 +123,11 @@ namespace Game.Models
             resultNet.Y = OneCoordBeginPointForCentering(currentClickNet.Y, beginRenderNet.Y, scale);
             return resultNet;
         }
+
+        /// <summary>
+        /// Генерирование объектов на сетке
+        /// </summary>
+        /// <param name="N">Размерность сетки</param>
         public void GenerateGlobalNet(int N)
         {
             Random random = new Random();
@@ -142,7 +170,11 @@ namespace Game.Models
             return false;
         }
 
-        //проверка на нахождение около фонаря 
+        /// <summary>
+        /// Проверка на нахождение около фонаря 
+        /// </summary>
+        /// <param name="pers">Координаты персонажа на сетке</param>
+        /// <returns>true — если персонаж недалеко от сетки, иначе false</returns>
         public bool IsNearLamp(Point pers)
         {
             Point pesr_n = pers;
@@ -153,6 +185,11 @@ namespace Game.Models
             return false;
         }
 
+        /// <summary>
+        /// Проверка клетки сетки на препятствие
+        /// </summary>
+        /// <param name="pointNet">Проверяемая клетка</param>
+        /// <returns>true — если клетка block, иначе false</returns>
         public bool IsBlock(Point pointNet)
         {
             if ((CellsOfNet[pointNet.X, pointNet.Y] == TypeOfCell.Block1) || (CellsOfNet[pointNet.X, pointNet.Y] == TypeOfCell.Block2))
@@ -160,6 +197,23 @@ namespace Game.Models
             return false;
         }
 
+        /// <summary>
+        /// Проверка, свободна ли клетка
+        /// </summary>
+        /// <param name="pointNet">Проверяемая клетка</param>
+        /// <returns>true — если клетка свободна, иначе false</returns>
+        public bool IsFree(Point pointNet)
+        {
+            if (((pointNet.X < N) && (pointNet.X > 0)) && ((pointNet.Y < N) && (pointNet.Y > 0)) && (!IsBlock(pointNet)))
+                return true;
+            return false;
+        }
+
+        /// <summary>
+        /// Проверка, является ли клетка факелом
+        /// </summary>
+        /// <param name="pointNet">Проверяемая клетка</param>
+        /// <returns>true — если клетка факел, иначе false</returns>
         public bool IsLamp(Point pointNet)
         {
             if (CellsOfNet[pointNet.X, pointNet.Y] == TypeOfCell.Lamp)
@@ -170,20 +224,19 @@ namespace Game.Models
         
 
         #region типы препятствий
-        public void Finish(Point beginNet)
+        private void Finish(Point beginNet)
         {
             CellsOfNet[beginNet.X, beginNet.Y] = TypeOfCell.Finish;
 
             finish = beginNet; 
         }
-        public bool Lamp(Point beginNet)
+        /// <summary>
+        /// Создает факел в указанной клетке
+        /// </summary>
+        /// <param name="beginNet">Клетка,в которой создается факел</param>
+        public void Lamp(Point beginNet)
         {
-            if (CellsOfNet[beginNet.X, beginNet.Y] == TypeOfCell.Free)
-            {
-                CellsOfNet[beginNet.X, beginNet.Y] = TypeOfCell.Lamp;
-                return true;
-            }
-            return false;
+            CellsOfNet[beginNet.X, beginNet.Y] = TypeOfCell.Lamp;
         }
 
         private bool StickFigure(Point begin, Direction direction)

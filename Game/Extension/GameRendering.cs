@@ -14,22 +14,47 @@ using Game.Enums;
 
 namespace Game.Extension
 {
-    // TODO 3d координаты??? 
     // Первый аргумент по X, второй аргумент по Y
+    /// <summary>
+    /// Класс расширения
+    /// Отрисовка объектов
+    /// </summary>
     public static class GameRendering
     {
         private static SimpleOpenGlControl Scene;
         private static int scaleX = 1; 
         private static int scaleY = 1;
 
-        public static uint mGlTextureObject0 = 0; //блок препятствие
-        public static uint mGlTextureObject1 = 0; // персонаж прозрачный
-        public static uint mGlTextureObject2 = 0; // персонаж текущий
-        public static uint mGlTextureObject3 = 0; // факел
-        public static uint mGlTextureObject4 = 0; // трава днем
-        public static uint mGlTextureObject5 = 0; // трава ночью
+        #region поля для отображения текстур
+        /// <summary>
+        /// Блок препятствие
+        /// </summary>
+        public static uint mGlTextureObject0 = 0;
+        /// <summary>
+        /// Прозрачный персонаж 
+        /// </summary>
+        public static uint mGlTextureObject1 = 0;
+        /// <summary>
+        /// Текущий персонаж 
+        /// </summary>
+        public static uint mGlTextureObject2 = 0;
+        /// <summary>
+        /// Факел
+        /// </summary>
+        public static uint mGlTextureObject3 = 0;
+        /// <summary>
+        /// Трава днем
+        /// </summary>
+        public static uint mGlTextureObject4 = 0;
+        /// <summary>
+        /// Трава ночью
+        /// </summary>
+        public static uint mGlTextureObject5 = 0; 
+        /// <summary>
+        /// Загружена ли текстура
+        /// </summary>
         public static bool textureIsLoad = false;
-
+#endregion 
 
         #region отрисовка сетки
 
@@ -39,7 +64,7 @@ namespace Game.Extension
         private static bool RenderTypeOfCell(Net net, Point testPoint, Point beginGraph, bool isNigth)
         {
             if (net[testPoint.X, testPoint.Y] == TypeOfCell.Free)
-                RenderSquareGraphPoint(beginGraph, isNigth);
+                RenderSquareGraphPoint(beginGraph);
             else if (net[testPoint.X, testPoint.Y] == TypeOfCell.Block1)
                 RenderFillSquareGraphPoint(beginGraph,0);
             else if (net[testPoint.X, testPoint.Y] == TypeOfCell.Block2)
@@ -51,7 +76,14 @@ namespace Game.Extension
             return false;
         }
 
-        // отрисовка сетки и ячеек в сетке
+        /// <summary>
+        /// Отрисовка сетки и ячеек в сетке 
+        /// </summary>
+        /// <param name="net">Отрисовываемая сетка</param>
+        /// <param name="first">Начальное положение отрисовываемой части сетки</param>
+        /// <param name="Scene">Графическая область для отрисовки</param>
+        /// <param name="scale">Масштаб сетки</param>
+        /// <param name="isNigth">Текущее время суток (true — ночь, false — день)</param>
         public static void RenderNet(Net net, Point first, SimpleOpenGlControl Scene, int scale, bool isNigth)
         {
             GameRendering.Scene = Scene; 
@@ -84,12 +116,17 @@ namespace Game.Extension
                 RenderLampAndLightGraphPoint(lampCoord, Textures.Toarch);
 
         }
-       
 
-#endregion
-        
 
-        // перевод графической точки в точку на алгоритмической сетке
+        #endregion
+
+
+        /// <summary>
+        /// Перевод графической точки в точку на алгоритмической сетке
+        /// </summary>
+        /// <param name="x">Абсцисса точки</param>
+        /// <param name="y">Ордината точки</param>
+        /// <returns></returns>
         public static Point GraphPointToAlgorithmPoint(int x, int y)
         {
             int Nx = x / scaleX; // число клеток по х
@@ -97,6 +134,11 @@ namespace Game.Extension
             return new Point(Nx, Ny);
         }
 
+        /// <summary>
+        /// отрисовка поля по всей области
+        /// </summary>
+        /// <param name="Scene">области отрисовки</param>
+        /// <param name="isNigth">текущее время суток (true — ночь, false — день)</param>
         public static void RenderField(SimpleOpenGlControl Scene, bool isNigth)
         {
             int height = Scene.Height;
@@ -123,16 +165,19 @@ namespace Game.Extension
 
 
                 // отрисовываем полигон
-                Gl.glBegin(Gl.GL_QUADS);
+                Gl.glBegin(Gl.GL_TRIANGLE_FAN);
 
                 Gl.glTexCoord2f(0, 0);
-                Gl.glVertex3d(0, 0, 0);
+                Gl.glVertex2d(0, 0);
+
                 Gl.glTexCoord2f(1, 0);
-                Gl.glVertex3d(width, 0, 0);
+                Gl.glVertex2d(width, 0);
+
                 Gl.glTexCoord2f(1, 1);
-                Gl.glVertex3d(width, height, 0);
+                Gl.glVertex2d(width, height);
+
                 Gl.glTexCoord2f(0, 1);
-                Gl.glVertex3d(0, height, 0);
+                Gl.glVertex2d(0, height);
 
                 // завершаем отрисовку
                 Gl.glEnd();
@@ -147,8 +192,14 @@ namespace Game.Extension
 
             }
         }
-        // отрисовка клетки, куда было произведено нажатие мыши, 
-        // возвращается точка на алгоритмической сетки
+
+        /// <summary>
+        /// Отрисовка клетки, куда было произведено нажатие мыши, 
+        /// </summary>
+        /// <param name="x">Абсцисса точки</param>
+        /// <param name="y">Ордината точки</param>
+        /// <param name="type">Тип отрисовываемой текстуры</param>
+        /// <returns>Возвращается точка на алгоритмической сетки</returns>
         public static Point RenderMouseClickGraphPoint(int x,int y, Textures type)
         {
             if (x >= 0 && y >= 0)
@@ -161,7 +212,12 @@ namespace Game.Extension
             return new Point();
         }
 
-        // отрисовка клетки, куда было произведено нажатие мыши, на алгоритмической сетке 
+        /// <summary>
+        /// Отрисовка клетки, куда было произведено нажатие мыши, на алгоритмической сетке 
+        /// </summary>
+        /// <param name="x">Абсцисса точки</param>
+        /// <param name="y">Ордината точки</param>
+        /// <param name="type">Тип отрисовываемой текстуры</param>
         public static void RenderMouseClickAlgorithmPoint(int x, int y, Textures type)
         {
            if (x >= 0 && y >= 0)
@@ -172,8 +228,11 @@ namespace Game.Extension
         }
 
         #region отрисовка ячеек
-        // засовываем сюда координаты на сцене
-        // начиная с левого нижнего угла
+
+        /// <summary>
+        /// Отрисовка финишной клетки
+        /// </summary>
+        /// <param name="begin">Координаты финишной клетки</param>
         public static void RenderFinishSquareGraphPoint(Point begin) //свободная клетка
         {
 
@@ -185,21 +244,10 @@ namespace Game.Extension
             Gl.glVertex2d(begin.X + scaleX, begin.Y);
             Gl.glEnd();
 
-
-            Gl.glBegin(Gl.GL_LINE_STRIP);
-            Gl.glColor3ub(0, 255, 0);
-            Gl.glVertex2d(begin.X, begin.Y);
-            Gl.glVertex2d(begin.X + scaleX, begin.Y);
-            Gl.glEnd();
-
-            Gl.glBegin(Gl.GL_LINE_STRIP);
-            Gl.glColor3ub(0, 255, 0);
-            Gl.glVertex2d(begin.X, begin.Y);
-            Gl.glVertex2d(begin.X, begin.Y + scaleY);
-            Gl.glEnd();
+            RenderSquareGraphPoint(begin);
 
         }
-        public static void RenderSquareGraphPoint(Point begin, bool isNight) //свободная клетка
+        private static void RenderSquareGraphPoint(Point begin) //свободная клетка
         {
 
             Gl.glBegin(Gl.GL_LINE_STRIP);
@@ -210,7 +258,9 @@ namespace Game.Extension
             Gl.glEnd();
 
         }
-        private static void RenderFillSquareGraphPoint(Point begin, Textures type) //препятствие
+
+        //препятствие
+        private static void RenderFillSquareGraphPoint(Point begin, Textures type) 
         {
             // если текстура загружена
             if (textureIsLoad)
@@ -242,16 +292,19 @@ namespace Game.Extension
 
 
                 // отрисовываем полигон
-                Gl.glBegin(Gl.GL_QUADS);
+                Gl.glBegin(Gl.GL_TRIANGLE_FAN);
 
                 Gl.glTexCoord2f(0, 0);
-                Gl.glVertex3d(begin.X, begin.Y, 0);
+                Gl.glVertex2d(begin.X, begin.Y);
+
                 Gl.glTexCoord2f(1, 0);
-                Gl.glVertex3d(begin.X + scaleX, begin.Y, 0);
+                Gl.glVertex2d(begin.X + scaleX, begin.Y);
+
                 Gl.glTexCoord2f(1, 1);
-                Gl.glVertex3d(begin.X + scaleX, begin.Y + scaleY, 0);
+                Gl.glVertex2d(begin.X + scaleX, begin.Y + scaleY);
+
                 Gl.glTexCoord2f(0, 1);
-                Gl.glVertex3d(begin.X, begin.Y + scaleY, 0);
+                Gl.glVertex2d(begin.X, begin.Y + scaleY);
 
                 // завершаем отрисовку
                 Gl.glEnd();
@@ -267,22 +320,12 @@ namespace Game.Extension
 
         }
 
-        // пока не используется
-        public static void RenderLampAndLightNetPoint(Point beginNet)
-        {
-            Point tmp = new Point(beginNet.X * scaleX, beginNet.Y * scaleY);
-            Gl.glColor3ub(0, 255, 0);
-            RenderFillSquareGraphPoint(tmp,0);
-            Gl.glColor4ub(255, 255, 0, 122);
-            tmp.X += (int)(scaleX * 0.5);
-            tmp.Y += (int)(scaleY * 0.5);
 
-            DrawCircle(tmp, scaleX * 2, scaleY * 2);
-
-        }
-        
-
-        // отрисовка фонаря
+        /// <summary>
+        /// Отрисовка факела
+        /// </summary>
+        /// <param name="beginGraph">Начальное положение отрисовки (графические координаты)</param>
+        /// <param name="type">Тип отрисовываемой текстуры</param>
         public static void RenderLampAndLightGraphPoint(Point beginGraph, Textures type)
         {
             Gl.glColor3ub(0, 255, 0);
@@ -311,7 +354,10 @@ namespace Game.Extension
             Gl.glEnd();
         }
 
-        // отрисовка пути 
+        /// <summary>
+        /// Отрисовка пути через центры ячеек пути
+        /// </summary>
+        /// <param name="way">Путь, который необходимо отрисовать</param>
         public static void RenderWayByAlgorithmPoint(List<Point> way)
         {
             if (way != null)
@@ -328,11 +374,11 @@ namespace Game.Extension
         }
         
         /// <summary>
-        /// отрисовка линии между соседними ячейками
-        /// для использования требуются координаты "алгоритмической" сетки (не пиксельные)
+        /// Отрисовка линии между соседними ячейками
+        /// Для использования требуются координаты "алгоритмической" сетки (не пиксельные)
         /// </summary>
-        /// <param name="begin">исходная ячейка, из которой должны провести линию</param>
-        /// <param name="end">конечная ячейка</param>
+        /// <param name="begin">Исходная ячейка, из которой должны провести линию</param>
+        /// <param name="end">Конечная ячейка</param>
         private static void RenderLineBetweenCell(Point begin, Point end)
         {
             Gl.glBegin(Gl.GL_LINES);

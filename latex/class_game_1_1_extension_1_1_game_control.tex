@@ -1,0 +1,81 @@
+\hypertarget{class_game_1_1_extension_1_1_game_control}{}\section{Класс Game.\+Extension.\+Game\+Control}
+\label{class_game_1_1_extension_1_1_game_control}\index{Game.\+Extension.\+Game\+Control@{Game.\+Extension.\+Game\+Control}}
+
+
+Класс расширения Алгоритм нахождения кратчайшего расстояния между двумя точками — A$\ast$  
+
+
+\subsection*{Открытые статические члены}
+\begin{DoxyCompactItemize}
+\item 
+static List$<$ Point $>$ \hyperlink{class_game_1_1_extension_1_1_game_control_a011fc710c60ead3c70da0dd2469fdeaf}{Find\+Path} (\hyperlink{namespace_game_1_1_enums_ab6782702f41f926eb2b923ee03a88069}{Type\+Of\+Cell}\mbox{[},\mbox{]} cells\+Of\+Net, Point start, Point goal, Point Begin\+Net, int scale)
+\begin{DoxyCompactList}\small\item\em Основной метод вычисления маршрута, кратчайшего пути \end{DoxyCompactList}\item 
+static List$<$ Point $>$ \hyperlink{class_game_1_1_extension_1_1_game_control_a25de72a65a2d4408d800805e7a721e74}{Optimized\+Find\+Path} (List$<$ Point $>$ previous\+Way, \hyperlink{namespace_game_1_1_enums_ab6782702f41f926eb2b923ee03a88069}{Type\+Of\+Cell}\mbox{[},\mbox{]} cells\+Of\+Net, Point start, Point goal, Point Begin\+Net, int scale)
+\begin{DoxyCompactList}\small\item\em Основной метод вычисления маршрута, кратчайшего пути \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Подробное описание}
+Класс расширения Алгоритм нахождения кратчайшего расстояния между двумя точками — A$\ast$ 
+
+
+
+\subsection{Методы}
+\mbox{\Hypertarget{class_game_1_1_extension_1_1_game_control_a011fc710c60ead3c70da0dd2469fdeaf}\label{class_game_1_1_extension_1_1_game_control_a011fc710c60ead3c70da0dd2469fdeaf}} 
+\index{Game\+::\+Extension\+::\+Game\+Control@{Game\+::\+Extension\+::\+Game\+Control}!Find\+Path@{Find\+Path}}
+\index{Find\+Path@{Find\+Path}!Game\+::\+Extension\+::\+Game\+Control@{Game\+::\+Extension\+::\+Game\+Control}}
+\subsubsection{\texorpdfstring{Find\+Path()}{FindPath()}}
+{\footnotesize\ttfamily static List$<$Point$>$ Game.\+Extension.\+Game\+Control.\+Find\+Path (\begin{DoxyParamCaption}\item[{\hyperlink{namespace_game_1_1_enums_ab6782702f41f926eb2b923ee03a88069}{Type\+Of\+Cell}}]{cells\+Of\+Net\mbox{[},\mbox{]},  }\item[{Point}]{start,  }\item[{Point}]{goal,  }\item[{Point}]{Begin\+Net,  }\item[{int}]{scale }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Основной метод вычисления маршрута, кратчайшего пути 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em cells\+Of\+Net} & Исходная сетка, на которой ищей кратчайший путь\\
+\hline
+{\em start} & Клетка, от которой начинаем поиск пути\\
+\hline
+{\em goal} & Клетка, до которой ищем путь\\
+\hline
+{\em Begin\+Net} & Начальное положение отображаемой сетки\\
+\hline
+{\em scale} & Масштаб отображаемой области, на которой ищется кратчайший путь\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+Возвращает найденный путь, список вершин
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_game_1_1_extension_1_1_game_control_a25de72a65a2d4408d800805e7a721e74}\label{class_game_1_1_extension_1_1_game_control_a25de72a65a2d4408d800805e7a721e74}} 
+\index{Game\+::\+Extension\+::\+Game\+Control@{Game\+::\+Extension\+::\+Game\+Control}!Optimized\+Find\+Path@{Optimized\+Find\+Path}}
+\index{Optimized\+Find\+Path@{Optimized\+Find\+Path}!Game\+::\+Extension\+::\+Game\+Control@{Game\+::\+Extension\+::\+Game\+Control}}
+\subsubsection{\texorpdfstring{Optimized\+Find\+Path()}{OptimizedFindPath()}}
+{\footnotesize\ttfamily static List$<$Point$>$ Game.\+Extension.\+Game\+Control.\+Optimized\+Find\+Path (\begin{DoxyParamCaption}\item[{List$<$ Point $>$}]{previous\+Way,  }\item[{\hyperlink{namespace_game_1_1_enums_ab6782702f41f926eb2b923ee03a88069}{Type\+Of\+Cell}}]{cells\+Of\+Net\mbox{[},\mbox{]},  }\item[{Point}]{start,  }\item[{Point}]{goal,  }\item[{Point}]{Begin\+Net,  }\item[{int}]{scale }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Основной метод вычисления маршрута, кратчайшего пути 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em previous\+Way} & Предыдущий найденный путь\\
+\hline
+{\em cells\+Of\+Net} & Исходная сетка, на которой ищей кратчайший путь\\
+\hline
+{\em start} & Клетка, от которой начинаем поиск пути\\
+\hline
+{\em goal} & Клетка, до которой ищем путь\\
+\hline
+{\em Begin\+Net} & Начальное положение отображаемой сетки\\
+\hline
+{\em scale} & Масштаб отображаемой области, на которой ищется кратчайший путь\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+Возвращает найденный путь, список вершин
+\end{DoxyReturn}
+
+
+Объявления и описания членов класса находятся в файле\+:\begin{DoxyCompactItemize}
+\item 
+Extension/Game\+Control.\+cs\end{DoxyCompactItemize}

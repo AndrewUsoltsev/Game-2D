@@ -6,13 +6,35 @@ using System.Threading.Tasks;
 
 namespace Game.Enums
 {
+    
+    /// <summary>
+    /// Обозначния текстур
+    /// </summary>
     public enum Textures
     {
-        Block = 0, //блок препятствие
-        TransparentCharacter = 1, // персонаж прозрачный
-        CurrentCharactert = 2, // персонаж текущий
-        Toarch = 3, // факел
-        GrassDay = 4, // день
-        GrassNight = 5 // ночь
+        /// <summary>
+        /// Препятствие
+        /// </summary>
+        Block = 0,
+        /// <summary>
+        /// Персонаж прозрачный
+        /// </summary>
+        TransparentCharacter = 1,
+        /// <summary>
+        /// Персонаж текущий
+        /// </summary>
+        CurrentCharactert = 2,  
+        /// <summary>
+        /// Факел
+        /// </summary>
+        Toarch = 3, 
+        /// <summary>
+        /// Трава Днем
+        /// </summary>
+        GrassDay = 4, 
+        /// <summary>
+        /// Трава Ночью
+        /// </summary>
+        GrassNight = 5
     }
 }

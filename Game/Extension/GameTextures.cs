@@ -14,9 +14,18 @@ using Game.Enums;
 namespace Game.Extension
 {
     // TODO указать авторство димы
+    /// <summary>
+    /// Класс расширения
+    /// Работа с текстурами (загрузка)
+    /// </summary>
     public static class GameTextures
     {
         private static int imageId = 0;
+        /// <summary>
+        /// Загрузка изображения для текстур
+        /// </summary>
+        /// <param name="url">Путь до текстуры</param>
+        /// <returns>возвращает данные загруженного для текстуры изображения </returns>
         public static uint loadImage(string url)
         {
 
@@ -58,6 +67,14 @@ namespace Game.Extension
             return mGlTextureObject;
         }
 
+        /// <summary>
+        /// Связывание текстуры
+        /// </summary>
+        /// <param name="Format">Формат создаваемой текстуры</param>
+        /// <param name="pixels">Указатель на данные изображения</param>
+        /// <param name="w">Ширина изображения</param>
+        /// <param name="h">Высота изображения</param>
+        /// <returns>Возвращает связанную текстуру в виде uint</returns>
         public static uint MakeGlTexture(int Format, IntPtr pixels, int w, int h)
         {
             // индетефекатор текстурного объекта

@@ -1,0 +1,93 @@
+\hypertarget{class_game_1_1_extension_1_1_work_with_time}{}\section{Класс Game.\+Extension.\+Work\+With\+Time}
+\label{class_game_1_1_extension_1_1_work_with_time}\index{Game.\+Extension.\+Work\+With\+Time@{Game.\+Extension.\+Work\+With\+Time}}
+
+
+Класс расширения Работа со временем  
+
+
+\subsection*{Открытые статические члены}
+\begin{DoxyCompactItemize}
+\item 
+static bool \hyperlink{class_game_1_1_extension_1_1_work_with_time_ada6b048bfd14c49efb3d32be4fc27b89}{Is\+Night} (int hour)
+\begin{DoxyCompactList}\small\item\em Определяет текущее время суток \end{DoxyCompactList}\item 
+static bool \hyperlink{class_game_1_1_extension_1_1_work_with_time_a52617dbfe3480e1fdb61f0fb9a49e5ad}{Times\+Of\+Day} (int hour\+Before, int hour\+After)
+\begin{DoxyCompactList}\small\item\em Определяет, сменилось ли время суток \end{DoxyCompactList}\item 
+static int \hyperlink{class_game_1_1_extension_1_1_work_with_time_ae37335d8f0245588bd981bd71308a6b6}{Sub\+Total\+Time\+Counting\+For\+Way} (List$<$ Point $>$ way, Date\+Time day\+Time, Point begin\+Render\+Net, \hyperlink{class_game_1_1_models_1_1_net}{Net} net, int day\+Time\+Tick)
+\begin{DoxyCompactList}\small\item\em Подсчет времени по пути, пройденным персонажем \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Подробное описание}
+Класс расширения Работа со временем 
+
+
+
+\subsection{Методы}
+\mbox{\Hypertarget{class_game_1_1_extension_1_1_work_with_time_ada6b048bfd14c49efb3d32be4fc27b89}\label{class_game_1_1_extension_1_1_work_with_time_ada6b048bfd14c49efb3d32be4fc27b89}} 
+\index{Game\+::\+Extension\+::\+Work\+With\+Time@{Game\+::\+Extension\+::\+Work\+With\+Time}!Is\+Night@{Is\+Night}}
+\index{Is\+Night@{Is\+Night}!Game\+::\+Extension\+::\+Work\+With\+Time@{Game\+::\+Extension\+::\+Work\+With\+Time}}
+\subsubsection{\texorpdfstring{Is\+Night()}{IsNight()}}
+{\footnotesize\ttfamily static bool Game.\+Extension.\+Work\+With\+Time.\+Is\+Night (\begin{DoxyParamCaption}\item[{int}]{hour }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Определяет текущее время суток 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em hour} & Часы, для определения времени суток\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+Возвращает true если ночь, день — false
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_game_1_1_extension_1_1_work_with_time_ae37335d8f0245588bd981bd71308a6b6}\label{class_game_1_1_extension_1_1_work_with_time_ae37335d8f0245588bd981bd71308a6b6}} 
+\index{Game\+::\+Extension\+::\+Work\+With\+Time@{Game\+::\+Extension\+::\+Work\+With\+Time}!Sub\+Total\+Time\+Counting\+For\+Way@{Sub\+Total\+Time\+Counting\+For\+Way}}
+\index{Sub\+Total\+Time\+Counting\+For\+Way@{Sub\+Total\+Time\+Counting\+For\+Way}!Game\+::\+Extension\+::\+Work\+With\+Time@{Game\+::\+Extension\+::\+Work\+With\+Time}}
+\subsubsection{\texorpdfstring{Sub\+Total\+Time\+Counting\+For\+Way()}{SubTotalTimeCountingForWay()}}
+{\footnotesize\ttfamily static int Game.\+Extension.\+Work\+With\+Time.\+Sub\+Total\+Time\+Counting\+For\+Way (\begin{DoxyParamCaption}\item[{List$<$ Point $>$}]{way,  }\item[{Date\+Time}]{day\+Time,  }\item[{Point}]{begin\+Render\+Net,  }\item[{\hyperlink{class_game_1_1_models_1_1_net}{Net}}]{net,  }\item[{int}]{day\+Time\+Tick }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Подсчет времени по пути, пройденным персонажем 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em way} & Путь персонажа\\
+\hline
+{\em day\+Time} & Текущее время суток\\
+\hline
+{\em begin\+Render\+Net} & \\
+\hline
+{\em net} & Сетка, по которой передвигается персонаж\\
+\hline
+{\em day\+Time\+Tick} & Модификатор времени суток\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+Возвращает число минут — затраченное персонажем на прохождение данного пути
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_game_1_1_extension_1_1_work_with_time_a52617dbfe3480e1fdb61f0fb9a49e5ad}\label{class_game_1_1_extension_1_1_work_with_time_a52617dbfe3480e1fdb61f0fb9a49e5ad}} 
+\index{Game\+::\+Extension\+::\+Work\+With\+Time@{Game\+::\+Extension\+::\+Work\+With\+Time}!Times\+Of\+Day@{Times\+Of\+Day}}
+\index{Times\+Of\+Day@{Times\+Of\+Day}!Game\+::\+Extension\+::\+Work\+With\+Time@{Game\+::\+Extension\+::\+Work\+With\+Time}}
+\subsubsection{\texorpdfstring{Times\+Of\+Day()}{TimesOfDay()}}
+{\footnotesize\ttfamily static bool Game.\+Extension.\+Work\+With\+Time.\+Times\+Of\+Day (\begin{DoxyParamCaption}\item[{int}]{hour\+Before,  }\item[{int}]{hour\+After }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Определяет, сменилось ли время суток 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em hour\+Before} & Часы до события\\
+\hline
+{\em hour\+After} & Часы после события\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+
+\end{DoxyReturn}
+
+
+Объявления и описания членов класса находятся в файле\+:\begin{DoxyCompactItemize}
+\item 
+Extension/Work\+With\+Time.\+cs\end{DoxyCompactItemize}

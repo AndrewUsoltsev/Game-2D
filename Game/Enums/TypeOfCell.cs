@@ -6,22 +6,30 @@ using System.Threading.Tasks;
 
 namespace Game.Enums
 {
-    // нужен в частности для графов, можно переделать позже
+    /// <summary>
+    /// Тип клетки
+    /// </summary>
     public enum TypeOfCell
     {
-        // блок по краям карты
+        /// <summary>
+        /// Препятствие, расположенное по краям карты
+        /// </summary>
         Block1,
-        // внутренние блоки карты
+        /// <summary>
+        /// Внутренние препятствия карты
+        /// </summary>
         Block2,
-        Block3,
-        // фонарь
+        /// <summary>
+        /// Факел
+        /// </summary>
         Lamp,
-        //Lamp,
-        Building2,
-        Building3,
-        // свободная клетка
+        /// <summary>
+        /// Свободная клетка
+        /// </summary>
         Free,
-        //финишная клетка
+        /// <summary>
+        /// Финишная клетка
+        /// </summary>
         Finish
     };    
 }

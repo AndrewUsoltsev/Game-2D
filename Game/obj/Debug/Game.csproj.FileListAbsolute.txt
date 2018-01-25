@@ -104,3 +104,4 @@ C:\Users\Admin\Documents\GitHub\Game-2D\Game\obj\Debug\Game.csproj.GenerateResou
 C:\Users\Admin\Documents\GitHub\Game-2D\Game\obj\Debug\Game.csproj.CoreCompileInputs.cache
 C:\Users\Admin\Documents\GitHub\Game-2D\Game\obj\Debug\Game.exe
 C:\Users\Admin\Documents\GitHub\Game-2D\Game\obj\Debug\Game.pdb
+C:\Users\Admin\Documents\GitHub\Game-2D\Game\bin\Debug\Game.xml

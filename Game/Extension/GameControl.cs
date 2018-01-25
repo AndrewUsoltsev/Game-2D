@@ -8,14 +8,14 @@ using Game.Enums;
 using Game.Models;
 namespace Game.Extension
 {
-    // класс расширения 
-    // в него входит алгоритм нахождения кратчайшего расстояния между двумя точками A*
+    /// <summary>
+    /// Класс расширения 
+    /// Алгоритм нахождения кратчайшего расстояния между двумя точками — A*
+    /// </summary>
+
     public static partial class GameControl
     {
-        public const int square = 4;
-        public const int octagon = 8;
-        private static int amountOfSidesCell = 4;
-            
+        private const int amountOfSidesCell = 4;
 
         // построение побочной сетки (той, которая будет отображаться)
         // нужно для того, чтобы алгоритм быстрее работал и не включал лишние вычисления
@@ -35,7 +35,15 @@ namespace Game.Extension
         }
 
 
-        // Основной метод вычисления маршрута 
+        /// <summary>
+        /// Основной метод вычисления маршрута, кратчайшего пути
+        /// </summary>
+        /// <param name="cellsOfNet">Исходная сетка, на которой ищей кратчайший путь</param>
+        /// <param name="start">Клетка, от которой начинаем поиск пути</param>
+        /// <param name="goal">Клетка, до которой ищем путь</param>
+        /// <param name="BeginNet">Начальное положение отображаемой сетки</param>
+        /// <param name="scale">Масштаб отображаемой области, на которой ищется кратчайший путь</param>
+        /// <returns>Возвращает найденный путь, список вершин</returns>
         public static List<Point> FindPath(TypeOfCell[,] cellsOfNet, Point start, Point goal, Point BeginNet, int scale)
         {
             // в случае неверных данных
@@ -92,6 +100,7 @@ namespace Game.Extension
             return null;
         }
 
+        #region не используемая оптимизация пути
         private static Direction DeterminationOfPositionOfPoint(Point begin, Point end)
         {
             // интересуют 3 направления
@@ -127,7 +136,16 @@ namespace Game.Extension
             }
        }
 
-        // Основной метод вычисления маршрута 
+        /// <summary>
+        /// Основной метод вычисления маршрута, кратчайшего пути
+        /// </summary>
+        /// <param name="previousWay">Предыдущий найденный путь</param>
+        /// <param name="cellsOfNet">Исходная сетка, на которой ищей кратчайший путь</param>
+        /// <param name="start">Клетка, от которой начинаем поиск пути</param>
+        /// <param name="goal">Клетка, до которой ищем путь</param>
+        /// <param name="BeginNet">Начальное положение отображаемой сетки</param>
+        /// <param name="scale">Масштаб отображаемой области, на которой ищется кратчайший путь</param>
+        /// <returns>Возвращает найденный путь, список вершин</returns>
         public static List<Point> OptimizedFindPath(List<Point> previousWay, TypeOfCell[,] cellsOfNet, Point start, Point goal, Point BeginNet, int scale)
         {
             // в случае неверных данных
@@ -156,7 +174,8 @@ namespace Game.Extension
             return FindPath(cellsOfNet, start, goal, BeginNet, scale);
         }
 
-       
+#endregion
+
         private static int GetDistanceBetweenNeighbours()
         {
             return 1;
@@ -173,7 +192,7 @@ namespace Game.Extension
 
         private static Point[] GetneighbourPointsOfSquare(PathNode pathNode)
         {
-            Point[] neighbourPoints = new Point[square];
+            Point[] neighbourPoints = new Point[amountOfSidesCell];
             neighbourPoints[0] = new Point(pathNode.Position.X + 1, pathNode.Position.Y);
             neighbourPoints[1] = new Point(pathNode.Position.X - 1, pathNode.Position.Y);
             neighbourPoints[2] = new Point(pathNode.Position.X, pathNode.Position.Y + 1);
@@ -189,11 +208,7 @@ namespace Game.Extension
 
             // Соседними точками являются соседние по стороне клетки.
             Point[] neighbourPoints = new Point[amountOfSidesCell];
-
-            if (amountOfSidesCell == square)
-                neighbourPoints = GetneighbourPointsOfSquare(pathNode);
-            else
-                return null;
+            neighbourPoints = GetneighbourPointsOfSquare(pathNode);
 
             foreach (var point in neighbourPoints)
             {

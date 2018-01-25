@@ -58,6 +58,7 @@
             this.Scene.StencilBits = ((byte)(0));
             this.Scene.TabIndex = 0;
             this.Scene.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Scene_MouseClick);
+            this.Scene.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Scene_MouseDoubleClick);
             this.Scene.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Scene_MouseMove);
             // 
             // TravelTime

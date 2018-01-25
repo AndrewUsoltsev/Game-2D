@@ -7,21 +7,34 @@ using System.Drawing;
 
 namespace Game.Models
 {
+    /// <summary>
+    /// Структура, используемая в алгоритме A*
+    /// </summary>
     public class PathNode
     {
-        // Координаты точки на карте.
+        /// <summary>
+        /// Координаты точки на карте. 
+        /// </summary>
         public Point Position { get; set; }
 
-        // Длина пути от старта (G).
+        /// <summary>
+        /// Длина пути от старта (G). 
+        /// </summary>
         public int PathLengthFromStart { get; set; }
 
-        // Точка, из которой пришли в эту точку.
+        /// <summary>
+        /// Точка, из которой пришли в эту точку. 
+        /// </summary>
         public PathNode CameFrom { get; set; }
 
-        // Примерное расстояние до цели (H).
+        /// <summary>
+        /// Примерное расстояние до цели (H).
+        /// </summary>
         public double HeuristicEstimatePathLength { get; set; }
 
-        // Ожидаемое полное расстояние до цели (F).
+        /// <summary>
+        /// Ожидаемое полное расстояние до цели (F).
+        /// </summary>
         public double EstimateFullPathLength
         {
             get

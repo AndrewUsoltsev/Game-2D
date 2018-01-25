@@ -1,0 +1,69 @@
+\hypertarget{class_game_1_1_extension_1_1_game_textures}{}\section{Класс Game.\+Extension.\+Game\+Textures}
+\label{class_game_1_1_extension_1_1_game_textures}\index{Game.\+Extension.\+Game\+Textures@{Game.\+Extension.\+Game\+Textures}}
+
+
+Класс расширения Работа с текстурами (загрузка)  
+
+
+\subsection*{Открытые статические члены}
+\begin{DoxyCompactItemize}
+\item 
+static uint \hyperlink{class_game_1_1_extension_1_1_game_textures_a3c65ea227c8143c391531385e244f0b8}{load\+Image} (string url)
+\begin{DoxyCompactList}\small\item\em Загрузка изображения для текстур \end{DoxyCompactList}\item 
+static uint \hyperlink{class_game_1_1_extension_1_1_game_textures_af190dd4e218dfd333b1d5ee7a9ce71d0}{Make\+Gl\+Texture} (int Format, Int\+Ptr pixels, int w, int h)
+\begin{DoxyCompactList}\small\item\em Связывание текстуры \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Подробное описание}
+Класс расширения Работа с текстурами (загрузка) 
+
+
+
+\subsection{Методы}
+\mbox{\Hypertarget{class_game_1_1_extension_1_1_game_textures_a3c65ea227c8143c391531385e244f0b8}\label{class_game_1_1_extension_1_1_game_textures_a3c65ea227c8143c391531385e244f0b8}} 
+\index{Game\+::\+Extension\+::\+Game\+Textures@{Game\+::\+Extension\+::\+Game\+Textures}!load\+Image@{load\+Image}}
+\index{load\+Image@{load\+Image}!Game\+::\+Extension\+::\+Game\+Textures@{Game\+::\+Extension\+::\+Game\+Textures}}
+\subsubsection{\texorpdfstring{load\+Image()}{loadImage()}}
+{\footnotesize\ttfamily static uint Game.\+Extension.\+Game\+Textures.\+load\+Image (\begin{DoxyParamCaption}\item[{string}]{url }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Загрузка изображения для текстур 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em url} & Путь до текстуры\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+возвращает данные загруженного для текстуры изображения 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_game_1_1_extension_1_1_game_textures_af190dd4e218dfd333b1d5ee7a9ce71d0}\label{class_game_1_1_extension_1_1_game_textures_af190dd4e218dfd333b1d5ee7a9ce71d0}} 
+\index{Game\+::\+Extension\+::\+Game\+Textures@{Game\+::\+Extension\+::\+Game\+Textures}!Make\+Gl\+Texture@{Make\+Gl\+Texture}}
+\index{Make\+Gl\+Texture@{Make\+Gl\+Texture}!Game\+::\+Extension\+::\+Game\+Textures@{Game\+::\+Extension\+::\+Game\+Textures}}
+\subsubsection{\texorpdfstring{Make\+Gl\+Texture()}{MakeGlTexture()}}
+{\footnotesize\ttfamily static uint Game.\+Extension.\+Game\+Textures.\+Make\+Gl\+Texture (\begin{DoxyParamCaption}\item[{int}]{Format,  }\item[{Int\+Ptr}]{pixels,  }\item[{int}]{w,  }\item[{int}]{h }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Связывание текстуры 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em Format} & Формат создаваемой текстуры\\
+\hline
+{\em pixels} & Указатель на данные изображения\\
+\hline
+{\em w} & Ширина изображения\\
+\hline
+{\em h} & Высота изображения\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+Возвращает связанную текстуру в виде uint
+\end{DoxyReturn}
+
+
+Объявления и описания членов класса находятся в файле\+:\begin{DoxyCompactItemize}
+\item 
+Extension/Game\+Textures.\+cs\end{DoxyCompactItemize}

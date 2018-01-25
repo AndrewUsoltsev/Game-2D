@@ -23,6 +23,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>true</Prefer32Bit>
+    <DocumentationFile>bin\Debug\Game.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -109,6 +110,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pictures\fac.bmp" />
+    <Content Include="Pictures\grassDay.png" />
+    <Content Include="Pictures\grassNight.png" />
     <Content Include="Pictures\kletca.bmp" />
     <Content Include="Pictures\pers.bmp" />
     <Content Include="Pictures\pers0.bmp" />

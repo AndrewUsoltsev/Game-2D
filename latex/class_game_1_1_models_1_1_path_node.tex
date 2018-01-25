@@ -1,0 +1,83 @@
+\hypertarget{class_game_1_1_models_1_1_path_node}{}\section{Класс Game.\+Models.\+Path\+Node}
+\label{class_game_1_1_models_1_1_path_node}\index{Game.\+Models.\+Path\+Node@{Game.\+Models.\+Path\+Node}}
+
+
+Структура, используемая в алгоритме A$\ast$  
+
+
+\subsection*{Свойства}
+\begin{DoxyCompactItemize}
+\item 
+Point \hyperlink{class_game_1_1_models_1_1_path_node_a6cece93479e46b7e12f1cb55a5ed8efc}{Position}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Координаты точки на карте. \end{DoxyCompactList}\item 
+int \hyperlink{class_game_1_1_models_1_1_path_node_ad0b667e8fc2377ce0c41576cfa382b15}{Path\+Length\+From\+Start}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Длина пути от старта (G). \end{DoxyCompactList}\item 
+\hyperlink{class_game_1_1_models_1_1_path_node}{Path\+Node} \hyperlink{class_game_1_1_models_1_1_path_node_a08e45c8ce9e42586702501c483b7c947}{Came\+From}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Точка, из которой пришли в эту точку. \end{DoxyCompactList}\item 
+double \hyperlink{class_game_1_1_models_1_1_path_node_a09eae29bd7b3159ca4cd3c370a1dafa6}{Heuristic\+Estimate\+Path\+Length}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Примерное расстояние до цели (H). \end{DoxyCompactList}\item 
+double \hyperlink{class_game_1_1_models_1_1_path_node_ac199fbf81d9f45f6b0a2ada32016d4e8}{Estimate\+Full\+Path\+Length}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Ожидаемое полное расстояние до цели (F). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Подробное описание}
+Структура, используемая в алгоритме A$\ast$ 
+
+
+
+\subsection{Полный список свойств}
+\mbox{\Hypertarget{class_game_1_1_models_1_1_path_node_a08e45c8ce9e42586702501c483b7c947}\label{class_game_1_1_models_1_1_path_node_a08e45c8ce9e42586702501c483b7c947}} 
+\index{Game\+::\+Models\+::\+Path\+Node@{Game\+::\+Models\+::\+Path\+Node}!Came\+From@{Came\+From}}
+\index{Came\+From@{Came\+From}!Game\+::\+Models\+::\+Path\+Node@{Game\+::\+Models\+::\+Path\+Node}}
+\subsubsection{\texorpdfstring{Came\+From}{CameFrom}}
+{\footnotesize\ttfamily \hyperlink{class_game_1_1_models_1_1_path_node}{Path\+Node} Game.\+Models.\+Path\+Node.\+Came\+From\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Точка, из которой пришли в эту точку. 
+
+\mbox{\Hypertarget{class_game_1_1_models_1_1_path_node_ac199fbf81d9f45f6b0a2ada32016d4e8}\label{class_game_1_1_models_1_1_path_node_ac199fbf81d9f45f6b0a2ada32016d4e8}} 
+\index{Game\+::\+Models\+::\+Path\+Node@{Game\+::\+Models\+::\+Path\+Node}!Estimate\+Full\+Path\+Length@{Estimate\+Full\+Path\+Length}}
+\index{Estimate\+Full\+Path\+Length@{Estimate\+Full\+Path\+Length}!Game\+::\+Models\+::\+Path\+Node@{Game\+::\+Models\+::\+Path\+Node}}
+\subsubsection{\texorpdfstring{Estimate\+Full\+Path\+Length}{EstimateFullPathLength}}
+{\footnotesize\ttfamily double Game.\+Models.\+Path\+Node.\+Estimate\+Full\+Path\+Length\hspace{0.3cm}{\ttfamily [get]}}
+
+
+
+Ожидаемое полное расстояние до цели (F). 
+
+\mbox{\Hypertarget{class_game_1_1_models_1_1_path_node_a09eae29bd7b3159ca4cd3c370a1dafa6}\label{class_game_1_1_models_1_1_path_node_a09eae29bd7b3159ca4cd3c370a1dafa6}} 
+\index{Game\+::\+Models\+::\+Path\+Node@{Game\+::\+Models\+::\+Path\+Node}!Heuristic\+Estimate\+Path\+Length@{Heuristic\+Estimate\+Path\+Length}}
+\index{Heuristic\+Estimate\+Path\+Length@{Heuristic\+Estimate\+Path\+Length}!Game\+::\+Models\+::\+Path\+Node@{Game\+::\+Models\+::\+Path\+Node}}
+\subsubsection{\texorpdfstring{Heuristic\+Estimate\+Path\+Length}{HeuristicEstimatePathLength}}
+{\footnotesize\ttfamily double Game.\+Models.\+Path\+Node.\+Heuristic\+Estimate\+Path\+Length\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Примерное расстояние до цели (H). 
+
+\mbox{\Hypertarget{class_game_1_1_models_1_1_path_node_ad0b667e8fc2377ce0c41576cfa382b15}\label{class_game_1_1_models_1_1_path_node_ad0b667e8fc2377ce0c41576cfa382b15}} 
+\index{Game\+::\+Models\+::\+Path\+Node@{Game\+::\+Models\+::\+Path\+Node}!Path\+Length\+From\+Start@{Path\+Length\+From\+Start}}
+\index{Path\+Length\+From\+Start@{Path\+Length\+From\+Start}!Game\+::\+Models\+::\+Path\+Node@{Game\+::\+Models\+::\+Path\+Node}}
+\subsubsection{\texorpdfstring{Path\+Length\+From\+Start}{PathLengthFromStart}}
+{\footnotesize\ttfamily int Game.\+Models.\+Path\+Node.\+Path\+Length\+From\+Start\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Длина пути от старта (G). 
+
+\mbox{\Hypertarget{class_game_1_1_models_1_1_path_node_a6cece93479e46b7e12f1cb55a5ed8efc}\label{class_game_1_1_models_1_1_path_node_a6cece93479e46b7e12f1cb55a5ed8efc}} 
+\index{Game\+::\+Models\+::\+Path\+Node@{Game\+::\+Models\+::\+Path\+Node}!Position@{Position}}
+\index{Position@{Position}!Game\+::\+Models\+::\+Path\+Node@{Game\+::\+Models\+::\+Path\+Node}}
+\subsubsection{\texorpdfstring{Position}{Position}}
+{\footnotesize\ttfamily Point Game.\+Models.\+Path\+Node.\+Position\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}
+
+
+
+Координаты точки на карте. 
+
+
+
+Объявления и описания членов класса находятся в файле\+:\begin{DoxyCompactItemize}
+\item 
+Models/Path\+Node.\+cs\end{DoxyCompactItemize}
