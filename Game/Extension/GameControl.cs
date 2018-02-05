@@ -105,13 +105,13 @@ namespace Game.Extension
         {
             // интересуют 3 направления
             if (end.Y > begin.Y && begin.X == end.X)
-                return Direction.UP;
+                return Direction.Up;
             if (end.X > begin.X)
                 if (end.Y > begin.Y)
                     return Direction.UpperRightCorner;
                 else
-                    return Direction.RIGHT;
-            return Direction.OTHER;
+                    return Direction.Right;
+            return Direction.Other;
 
         }
 
@@ -119,10 +119,10 @@ namespace Game.Extension
        {
            switch (direction)
            {
-               case Direction.RIGHT:
+               case Direction.Right:
                    previousWay.Add(new Point(refPoint.X + 1, refPoint.Y));
                    break;
-               case Direction.UP:
+               case Direction.Up:
                    previousWay.Add(new Point(refPoint.X, refPoint.Y+1));
                    break;
                case Direction.UpperRightCorner:
@@ -164,7 +164,7 @@ namespace Game.Extension
                 if (previousWay[index].X > start.X && previousWay[index].Y > start.Y)
                 {
                     Direction direction = DeterminationOfPositionOfPoint(refPoint, goal);
-                    if (direction != Direction.OTHER)
+                    if (direction != Direction.Other)
                     {
                         AddPointToOptimizedPath(cellsOfNet, ref previousWay, direction, refPoint);
                         return previousWay;

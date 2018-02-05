@@ -14,19 +14,19 @@ namespace Game.Enums
         /// <summary>
         /// Вверх
         /// </summary>
-        UP,
+        Up,
         /// <summary>
         /// Вниз
         /// </summary>
-        DOWN,
+        Down,
         /// <summary>
         /// Вправо
         /// </summary>
-        LEFT,
+        Left,
         /// <summary>
         /// Влево
         /// </summary>
-        RIGHT,
+        Right,
         /// <summary>
         /// Верхний правый угол
         /// </summary>
@@ -34,6 +34,6 @@ namespace Game.Enums
         /// <summary>
         /// Остальные направления
         /// </summary>
-        OTHER
+        Other
     }
 }

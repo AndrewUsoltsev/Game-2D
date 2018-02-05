@@ -138,9 +138,9 @@ namespace Game.Models
 
                 int type = random.Next(2);
                 if (type == 1)
-                    StickFigure(new Point(rX, rY), Direction.DOWN);
+                    StickFigure(new Point(rX, rY), Direction.Down);
                 else
-                    TriangleFigure(new Point(rX, rY), Direction.DOWN);
+                    TriangleFigure(new Point(rX, rY), Direction.Down);
             }
             Lamp(new Point(4, 4));
             Point p = (new Point(0, 0));
@@ -242,7 +242,7 @@ namespace Game.Models
         private bool StickFigure(Point begin, Direction direction)
         {
             int length = 4;
-            if (direction == Direction.DOWN)
+            if (direction == Direction.Down)
             {
                 if ((begin.Y + length >= N) || (begin.Y - length <= 0))
                     return false;
@@ -263,7 +263,7 @@ namespace Game.Models
                 CellsOfNet[begin.X, begin.Y - 2] = TypeOfCell.Block2;
                 CellsOfNet[begin.X, begin.Y - 3] = TypeOfCell.Block2;
             }
-            else if (direction == Direction.RIGHT)
+            else if (direction == Direction.Right)
             {
                 if ((begin.X + length >= N) || (begin.X - length <= 0))
                     return false;
